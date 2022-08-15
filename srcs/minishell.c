@@ -9,7 +9,6 @@ void	ft_perror(char *str)
 	printf("%s %s\n", str, strerror(errno));
 }
 
-
 //use tcsetattr and tcgetattr to modify your terminal settings.
 //clear the ECHOCTL bit flag to suppress output from Ctrl-based signals.
 void	ft_nodisplay_ctrlx_set(void)
@@ -29,7 +28,7 @@ void	sig_handler(int	signo)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();		 //make new prompt line
-		// rl_replace_line("", ON); //replace the contents of rl_line_buffer with text in line, If clear_undo is non-zero, the undo list associated with the current line is cleared.
+		rl_replace_line("", ON); //replace the contents of rl_line_buffer with text in line, If clear_undo is non-zero, the undo list associated with the current line is cleared.
 		rl_redisplay();			 //show the current content of rl_line_buffer;
 	}
 	return ;
@@ -83,7 +82,7 @@ void	shell_loop()
 			printf("\033[7C");
 			printf("exit\n");
 			free(line);
-			exit(-1);
+			exit(1);
 		}
 	}
 }

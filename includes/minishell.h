@@ -15,10 +15,17 @@
 
 # include "../libft/libft.h"
 
+/* to fix rl_replace_line compilation error */
+void rl_replace_line(const char *text, int clear_undo);
+
 # define LOOP 1
 
 # define ON 1
 # define OFF 0
+
+# define TRUE 1
+# define FALSE 0
+
 
 # define SUCCESS 0
 # define ERROR -1
