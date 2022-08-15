@@ -34,13 +34,6 @@ void	sig_handler(int	signo)
 	return ;
 }
 
-
-// char	**get_parse(char *line)
-// {
-// 	//get_next_line() to be used
-// }
-
-
 void	show_list_contents(t_list *list)
 {
 	t_list	*tmp;
@@ -48,7 +41,7 @@ void	show_list_contents(t_list *list)
 	tmp = list;
 	while (tmp)
 	{
-		printf("%s \\", (char *)tmp->content);
+		printf("[%s]", (char *)tmp->content);
 		tmp = tmp->next;
 	}
 	printf("\n");

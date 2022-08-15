@@ -6,47 +6,40 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/15 19:36:35 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/15 23:06:47 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// int	isthere_quote(char *str)
-// {
-// 	int		i;
+void	lstadd_token_node(char *token, t_list **token_list);
 
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '\"')
-// 			return (TRUE);
-// 		i++;
-// 	}
-// 	return (FALSE);
-// }
+void	make_tokens_list(const char *str, t_list **token_list)
+{
+	char	*line;
+	int		i;
+	int		len;
 
-// char	**get_splited_args(char *line)
-// {
-// 	char	**tmp1;
-// 	char	**tmp2;
-// 	char	**arg;
+	line = ft_strtrim(str, " ");
+	i = 0;
+	while (line[i])
+	{
+		len = 0;
+		while (line[i] && ft_isalpha(line[i]))
+		{
+			len++;
+			i++;
+		}
+		lstadd_token_node(ft_substr(line, i - len, len), token_list);
+		while (line[i] && !ft_isalpha(line[i]))
+		{
+			lstadd_token_node(ft_substr(line, i, 1), token_list);
+			i++;
+		}
+	}
+}
 
-// 	tmp1 = ft_split(line, '\"');
-// 	int		i;
-// 	i = 0;
-// 	while (tmp1[i])
-// 	{
-// 		if (isthere_quote(tmp1[i]) == TRUE)
-// 		{
-
-// 		}
-// 		i++;
-// 	}
-// 	return (arg);
-// }
-
-void	make_token_list(char *token, t_list **token_list)
+void	lstadd_token_node(char *token, t_list **token_list)
 {
 	t_list	*tmp;
 
@@ -61,17 +54,9 @@ void	make_token_list(char *token, t_list **token_list)
 
 t_list	*get_token_list(char *line)
 {
-	char	**arg;
 	t_list	*token_list;
-	int		i;
 
 	token_list = NULL;
-	arg = ft_split(line, ' ');
-	i = 0;
-	while (arg[i])
-	{
-		make_token_list(arg[i], &token_list);
-		i++;
-	}
+	make_tokens_list(line, &token_list);
 	return (token_list);
 }

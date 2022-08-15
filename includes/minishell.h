@@ -26,7 +26,6 @@ void rl_replace_line(const char *text, int clear_undo);
 # define TRUE 1
 # define FALSE 0
 
-
 # define SUCCESS 0
 # define ERROR -1
 
