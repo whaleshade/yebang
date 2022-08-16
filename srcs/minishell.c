@@ -59,7 +59,9 @@ void	shell_loop()
 		line = readline("minsh$ ");
 		if (line)
 		{
+			//char **subline = ft_split(line, ';');
 			token_list = get_token_list(line);
+			//parsing using token list
 			printf("you typed : %s\n", line); //to be deleted
 
 			show_list_contents(token_list);

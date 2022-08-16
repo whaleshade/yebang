@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/15 23:06:47 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/16 21:49:24 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,15 @@ void	make_tokens_list(const char *str, t_list **token_list)
 			i++;
 		}
 		lstadd_token_node(ft_substr(line, i - len, len), token_list);
+
+		//yeblee - "" '' () 처리
+		//jibang - 나머지
 		while (line[i] && !ft_isalpha(line[i]))
 		{
 			lstadd_token_node(ft_substr(line, i, 1), token_list);
 			i++;
 		}
+
 	}
 }
 
