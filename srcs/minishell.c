@@ -1,10 +1,13 @@
 #include "../includes/minishell.h"
 
+/* to be organized */
+#include "start_screen.c"
+#include "get_tokens.c"
+
 void	ft_perror(char *str)
 {
 	printf("%s %s\n", str, strerror(errno));
 }
-
 
 //use tcsetattr and tcgetattr to modify your terminal settings.
 //clear the ECHOCTL bit flag to suppress output from Ctrl-based signals.
@@ -31,30 +34,41 @@ void	sig_handler(int	signo)
 	return ;
 }
 
+void	show_list_contents(t_list *list)
+{
+	t_list	*tmp;
 
-// char	**get_parse(char *line)
-// {
-// 	//get_next_line() to be used
-// }
-
+	tmp = list;
+	while (tmp)
+	{
+		printf("[%s]", (char *)tmp->content);
+		tmp = tmp->next;
+	}
+	printf("\n");
+}
 
 void	shell_loop()
 {
 	char	*line;
-	// char	**args;
+	t_list	*token_list;
 
 	while (LOOP)
 	{
-		signal(SIGINT, sig_handler); // ctrl + c
+		signal(SIGINT, sig_handler); // ctrl + c ... before fork(), set default
 		signal(SIGQUIT, SIG_IGN); // ctrl +'\'
 		line = readline("minsh$ ");
 		if (line)
 		{
+			//char **subline = ft_split(line, ';');
+			token_list = get_token_list(line);
+			//parsing using token list
 			printf("you typed : %s\n", line); //to be deleted
-			// args = get_parse(line);
+
+			show_list_contents(token_list);
+
 			add_history(line); //shows the history of lines, by pressing arrows
 			free(line);
-			//free(args);
+			//free(token_list);
 			line = NULL;
 		} //line[0] = '\0'일 경우도 처리 해줘야 하나?
 		else
@@ -63,7 +77,7 @@ void	shell_loop()
 			printf("\033[7C");
 			printf("exit\n");
 			free(line);
-			exit(-1);
+			exit(1);
 		}
 	}
 }
@@ -96,13 +110,13 @@ static void	ft_art(void)
 int	main()
 {
 	/* START SCREEN */
-	ft_art();
+	ft_start_screen();
 
 	/* READ ENV */
 	//YOUR CODE HERE
 
 	/* TERMINAL INIT SETTINGS */
-	ft_nodisplay_ctrlx_set();
+	//ft_nodisplay_ctrlx_set();
 
 	/* CMD LOOP */
 	shell_loop(); //READ, PASE, EXEC

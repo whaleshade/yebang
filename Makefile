@@ -20,8 +20,8 @@ CFLAGS			= -Wall -Wextra -Werror
 RM				= rm -rf
 
 LIB_READ		= readline
-LDFLAGS			= -L/opt/homebrew/opt/readline/lib
-CPPFLAGS		= -I/opt/homebrew/opt/readline/include
+LDFLAGS			= -L$(shell brew --prefix readline)/lib
+CPPFLAGS		= -I$(shell brew --prefix readline)/include
 
 HEADERS			= includes
 LIBFT			= -L./libft -lft
@@ -37,7 +37,7 @@ OBJS			= $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 $(DIR_O)/%.o: $(DIR_S)/%.c $(HEADERS)/$(NAME).h
 	@echo $(YELLOW) "Compiling...\t" $< $(EOC) $(LINE_CLEAR)
 	@mkdir -p $(DIR_O)
-	@$(CC) $(CFLAGS) -I $(HEADERS) -c $< -o $@ 
+	@$(CC) $(CFLAGS) -I $(HEADERS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	@echo $(GREEN) "Source files are compiled!\n" $(EOC)
@@ -58,9 +58,9 @@ fclean:	clean
 	@$(RM) $(NAME) $(BONUS)
 	@make fclean -C libft
 	@echo $(RED) "$(NAME) is removed!\n\n" $(EOC)
-	
-re:	
-	@make fclean 
+
+re:
+	@make fclean
 	@make all
 
-.PHONY: all clean fclean re 
+.PHONY: all clean fclean re
