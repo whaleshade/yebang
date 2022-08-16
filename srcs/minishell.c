@@ -1,6 +1,4 @@
-#include "minishell.h"
-
-//one global variable allowed
+#include "../includes/minishell.h"
 
 void	ft_perror(char *str)
 {
@@ -27,7 +25,7 @@ void	sig_handler(int	signo)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();		 //make new prompt line
-		rl_replace_line("", ON); //replace the contents of rl_line_buffer with text in line, If clear_undo is non-zero, the undo list associated with the current line is cleared.
+		// rl_replace_line("", ON); //replace the contents of rl_line_buffer with text in line, If clear_undo is non-zero, the undo list associated with the current line is cleared.
 		rl_redisplay();			 //show the current content of rl_line_buffer;
 	}
 	return ;
@@ -70,26 +68,45 @@ void	shell_loop()
 	}
 }
 
+static void	ft_art(void)
+{
+	int		i;
+	int		fd;
+	char	*line;
+	int		color;
+
+	i = 0;
+	color = 31;
+	fd = open("yebang_shell.txt", O_RDONLY);
+	// fd = open("vaccine_shell.txt", O_RDONLY);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break;
+		if (++i % 8 == 0)
+			color++;
+		printf("\033[0;%dm%s", color, line);
+		free(line);
+	}
+	free(line);
+	printf("\n\033[0;0m\x1b[1A\x1b[M");
+}
+
 int	main()
 {
 	/* START SCREEN */
-	printf("#######################\n");
-	printf("##                   ##\n");
-	printf("##     MINISHELL     ##\n");
-	printf("##                   ##\n");
-	printf("#######################\n");
+	ft_art();
 
 	/* READ ENV */
 	//YOUR CODE HERE
 
 	/* TERMINAL INIT SETTINGS */
-	// ft_nodisplay_ctrlx_set();
+	ft_nodisplay_ctrlx_set();
 
 	/* CMD LOOP */
-	shell_loop(); //READ, PARSE, EXEC
-
+	shell_loop(); //READ, PASE, EXEC
 	/* TERMINATE PROC */
 	//YOUR CODE HERE
-
 	return (0);
 }
