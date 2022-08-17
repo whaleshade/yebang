@@ -23,4 +23,6 @@
 # define SUCCESS 0
 # define ERROR -1
 
+void	rl_replace_line (const char *text, int clear_undo);
+
 #endif
