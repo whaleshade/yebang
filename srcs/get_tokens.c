@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/17 17:09:09 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/17 19:16:58 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,100 @@ void	make_alpha_token(char *line, int *i, t_list **token_list)
 	lstadd_token_node(ft_substr(line, *i - len, len), token_list);
 }
 
+void	make_d_quote_token(char *line, int *i, t_list **token_list)
+{
+	int		len;
+
+	(*i)++;
+	len = 0;
+	while (line[*i] && line[*i] != '\"')
+	{
+		len++;
+		(*i)++;
+	}
+	if (line[*i] == '\"')
+	{
+		len++;
+		(*i)++;
+	}
+	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list);
+}
+
+void	make_s_quote_token(char *line, int *i, t_list **token_list)
+{
+	int		len;
+
+	(*i)++;
+	len = 0;
+	while (line[*i] && line[*i] != '\'')
+	{
+		len++;
+		(*i)++;
+	}
+	if (line[*i] == '\'')
+	{
+		len++;
+		(*i)++;
+	}
+	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list);
+}
+
 
 void	make_tokens_list(const char *str, t_list **token_list)
 {
 	char	*line;
 	int		i;
-	// int		len;
 
 	line = ft_strtrim(str, " ");
 	i = 0;
 	while (line[i])
 	{
 		make_alpha_token(line, &i, token_list);
-		//yeblee - "" '' () 처리
-		//jibang - 나머지
+
 		while (line[i] && !ft_isalpha(line[i]))
 		{
+			/* quotation case */
+			if (line[i] == '\"')
+			{
+				make_d_quote_token(line, &i, token_list);
+			}
+			if (line[i] == '\'')
+			{
+				make_s_quote_token(line, &i, token_list);
+			}
+			/* | case */
+			if (line[i] == '|' && line[i] != '|')
+				lstadd_token_node(ft_substr(line, i, 1), token_list);
+			if (line[i] == '|' && line[i] == '|')
+			{
+				lstadd_token_node(ft_substr(line, i, 2), token_list);
+				i++;
+			}
+			/* & case */
+			if (line[i] == '&' && line[i] != '&') // -> 예외처리!
+				lstadd_token_node(ft_substr(line, i, 1), token_list);
+			if (line[i] == '&' && line[i] == '&')
+			{
+				lstadd_token_node(ft_substr(line, i, 2), token_list);
+				i++;
+			}
+			/* < case */
+			if (line[i] == '<' && line[i] != '<')
+				lstadd_token_node(ft_substr(line, i, 1), token_list);
+			if (line[i] == '<' && line[i] == '<')
+			{
+				lstadd_token_node(ft_substr(line, i, 2), token_list);
+				i++;
+			}
+			/* > case */
+			if (line[i] == '>' && line[i] != '>')
+				lstadd_token_node(ft_substr(line, i, 1), token_list);
+			if (line[i] == '>' && line[i] == '>')
+			{
+				lstadd_token_node(ft_substr(line, i, 2), token_list);
+				i++;
+			}
+			/* else */
 			lstadd_token_node(ft_substr(line, i, 1), token_list);
 			i++;
 		}
