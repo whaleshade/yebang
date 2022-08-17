@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/17 19:52:13 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/17 20:07:49 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	lstadd_token_node(char *token, t_list **token_list);
 
-void	make_alpha_token(char *line, int *i, t_list **token_list)
+void	make_alnum_token(char *line, int *i, t_list **token_list)
 {
 	int		len;
 
 	len = 0;
-	while (line[*i] && ft_isalpha(line[*i]))
+	while (line[*i] && ft_isalnum(line[*i]))
 	{
 		len++;
 		(*i)++;
@@ -107,9 +107,9 @@ void	make_tokens_list(const char *str, t_list **token_list)
 	i = 0;
 	while (line[i])
 	{
-		make_alpha_token(line, &i, token_list);
+		make_alnum_token(line, &i, token_list);
 
-		while (line[i] && !ft_isalpha(line[i]))
+		while (line[i] && !ft_isalnum(line[i]))
 		{
 			/* quotation case */
 			if (line[i] == '\"')
