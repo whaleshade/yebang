@@ -49,27 +49,32 @@ void	show_list_contents(t_list *list)
 
 void	shell_loop()
 {
-	char	*line;
+	char	*cli_str;
+	char	**line;
+	int		i;
 	t_list	*token_list;
 
 	while (LOOP)
 	{
 		signal(SIGINT, sig_handler); // ctrl + c ... before fork(), set default
 		signal(SIGQUIT, SIG_IGN); // ctrl +'\'
-		line = readline("minsh$ ");
-		if (line)
+		cli_str = readline("minsh$ ");
+		if (cli_str)
 		{
-			//char **subline = ft_split(line, ';');
-			token_list = get_token_list(line);
-			//parsing using token list
-			printf("you typed : %s\n", line); //to be deleted
+			line = ft_split(cli_str, ';');
+			i = 0;
+			while (line[i])
+			{
+				token_list = get_token_list(line[i]);
+				show_list_contents(token_list);
+				i++;
+			}
 
-			show_list_contents(token_list);
-
-			add_history(line); //shows the history of lines, by pressing arrows
-			free(line);
+			add_history(cli_str); //shows the history of lines, by pressing arrows
+			free(cli_str);
 			//free(token_list);
-			line = NULL;
+			//free(line);
+			cli_str = NULL;
 		} //line[0] = '\0'일 경우도 처리 해줘야 하나?
 		else
 		{
