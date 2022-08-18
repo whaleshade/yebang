@@ -1,5 +1,4 @@
 # ================ Color Variables ================ #
-
 BLACK			= 	"\033[0;30m"
 GRAY			= 	"\033[1;30m"
 RED				=	"\033[0;31m"
@@ -10,7 +9,6 @@ CYAN			=	"\033[0;36m"
 WHITE			=	"\033[1;37m"
 EOC				=	"\033[0;0m"
 LINE_CLEAR		=	"\x1b[1A\x1b[M"
-
 # ================================================= #
 
 NAME			= minishell
@@ -19,12 +17,16 @@ CC				= cc
 CFLAGS			= -Wall -Wextra -Werror
 RM				= rm -rf
 
-LIB_READ		= readline
+LIB_READ		= -l readline
 LDFLAGS			= -L$(shell brew --prefix readline)/lib
 CPPFLAGS		= -I$(shell brew --prefix readline)/include
 
-HEADERS			= includes
-LIBFT			= -L./libft -lft
+LIB_DIR			= ./lib/
+LIBFT			= libft/libft.a
+GNL				= get_next_line/libgnl.a
+FTPRINT			= ft_printf/libftprintf.a
+
+HEADERS			= includes\
 DIR_O			= obj
 DIR_S 			= srcs
 
@@ -41,8 +43,10 @@ $(DIR_O)/%.o: $(DIR_S)/%.c $(HEADERS)/$(NAME).h
 
 $(NAME): $(OBJS)
 	@echo $(GREEN) "Source files are compiled!\n" $(EOC)
-	@make -C libft
-	@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT) -l $(LIB_READ) $(LDFLAGS) $(CPPFLAGS)
+	@make -j -C libft $(LIB_DIR)/libft
+	@make -j -C libft $(LIB_DIR)/ft_printf
+	@make -j -C libft $(LIB_DIR)/get_next_line
+	@$(CC) $(CFLAGS) -o $@ $^ $(LIB_DIR)/$(LIBFT) $(LIB_DIR)/$(GNL) $(LIB_READ) $(LDFLAGS) $(CPPFLAGS)
 	@echo $(GREEN) "$(NAME) is created!\n" $(EOC)
 
 all: $(NAME)
@@ -50,13 +54,17 @@ all: $(NAME)
 clean:
 	@echo $(YELLOW) "Cleaning object files..." $(EOC)
 	@$(RM) $(DIR_O)
-	@make clean -C libft
+	@make -j clean -C $(LIB_DIR)/libft
+	@make -j clean -C $(LIB_DIR)/ft_printf
+	@make -j clean -C $(LIB_DIR)/get_next_line
 	@echo $(RED) "Object files are cleaned!\n" $(EOC)
 
 fclean:	clean
 	@echo $(YELLOW) "Removing $(NAME)..." $(EOC)
-	@$(RM) $(NAME) $(BONUS)
-	@make fclean -C libft
+	@$(RM) $(NAME)
+	@make -j fclean -C $(LIB_DIR)/libft
+	@make -j fclean -C $(LIB_DIR)/ft_printf
+	@make -j fclean -C $(LIB_DIR)/get_next_line
 	@echo $(RED) "$(NAME) is removed!\n\n" $(EOC)
 
 re:
