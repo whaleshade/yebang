@@ -28,7 +28,7 @@ void	sig_handler(int	signo)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();		 //make new prompt line
-		// rl_replace_line("", ON); //replace the contents of rl_line_buffer with text in line, If clear_undo is non-zero, the undo list associated with the current line is cleared.
+		rl_replace_line("", ON); //replace the contents of rl_line_buffer with text in line, If clear_undo is non-zero, the undo list associated with the current line is cleared.
 		rl_redisplay();			 //show the current content of rl_line_buffer;
 	}
 	return ;
@@ -49,27 +49,32 @@ void	show_list_contents(t_list *list)
 
 void	shell_loop()
 {
-	char	*line;
+	char	*cli_str;
+	char	**line;
+	int		i;
 	t_list	*token_list;
 
 	while (LOOP)
 	{
 		signal(SIGINT, sig_handler); // ctrl + c ... before fork(), set default
 		signal(SIGQUIT, SIG_IGN); // ctrl +'\'
-		line = readline("minsh$ ");
-		if (line)
+		cli_str = readline("minsh$ ");
+		if (cli_str)
 		{
-			//char **subline = ft_split(line, ';');
-			token_list = get_token_list(line);
-			//parsing using token list
-			printf("you typed : %s\n", line); //to be deleted
+			line = ft_split(cli_str, ';');
+			i = 0;
+			while (line[i])
+			{
+				token_list = get_token_list(line[i]);
+				show_list_contents(token_list);
+				i++;
+			}
 
-			show_list_contents(token_list);
-
-			add_history(line); //shows the history of lines, by pressing arrows
-			free(line);
+			add_history(cli_str); //shows the history of lines, by pressing arrows
+			free(cli_str);
 			//free(token_list);
-			line = NULL;
+			//free(line);
+			cli_str = NULL;
 		} //line[0] = '\0'일 경우도 처리 해줘야 하나?
 		else
 		{
@@ -82,30 +87,6 @@ void	shell_loop()
 	}
 }
 
-static void	ft_art(void)
-{
-	int		i;
-	int		fd;
-	char	*line;
-	int		color;
-
-	i = 0;
-	color = 31;
-	fd = open("yebang_shell.txt", O_RDONLY);
-	// fd = open("vaccine_shell.txt", O_RDONLY);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break;
-		if (++i % 8 == 0)
-			color++;
-		printf("\033[0;%dm%s", color, line);
-		free(line);
-	}
-	free(line);
-	printf("\n\033[0;0m\x1b[1A\x1b[M");
-}
 
 int	main()
 {
