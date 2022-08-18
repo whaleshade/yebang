@@ -9,20 +9,19 @@
 # include <signal.h>
 # include <termios.h>
 # include <fcntl.h>
-
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# include "../libft/libft.h"
+# include "../lib/libft/libft.h"
+# include "../lib/ft_printf/ft_printf.h"
+# include "../lib/get_next_line/get_next_line.h"
 
 # define LOOP 1
-
 # define ON 1
 # define OFF 0
-
 # define SUCCESS 0
 # define ERROR -1
 
-void	rl_replace_line (const char *text, int clear_undo);
+void	welcome_screen(void);
 
 #endif
