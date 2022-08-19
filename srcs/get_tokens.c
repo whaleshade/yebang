@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/19 17:27:26 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/19 17:40:57 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,23 @@ void	make_parenthesis_token(char *line, int *i, t_list **token_list)
 	rcnt = 0;
 	(*i)++;
 	len = 0;
-	while (line[*i] && line[*i] != ')')
+
+	while (line[*i] && (lcnt != rcnt))
 	{
-		len++;
-		(*i)++;
 		if (line[*i] == '(')
 			lcnt++;
-	}
-	if (line[*i] == ')')
-	{
-		rcnt++;
-		while (line[*i] && (lcnt != rcnt))
+		if (line[*i] == ')')
 		{
-			len++;
-			(*i)++;
-			if (line[*i] == ')')
-				rcnt++;
+			while (line[*i] && (lcnt != rcnt))
+			{
+				len++;
+				(*i)++;
+				if (line[*i] == ')')
+					rcnt++;
+			}
 		}
+		if (lcnt == rcnt)
+			break ;
 		len++;
 		(*i)++;
 	}
