@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/17 20:07:49 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/19 16:45:13 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	make_d_quote_token(char *line, int *i, t_list **token_list)
 		(*i)++;
 	}
 	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list);
+	(*i)--;
 }
 
 void	make_s_quote_token(char *line, int *i, t_list **token_list)
@@ -63,6 +64,7 @@ void	make_s_quote_token(char *line, int *i, t_list **token_list)
 		(*i)++;
 	}
 	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list);
+	(*i)--;
 }
 
 void	make_parenthesis_token(char *line, int *i, t_list **token_list)
@@ -114,45 +116,46 @@ void	make_tokens_list(const char *str, t_list **token_list)
 			/* quotation case */
 			if (line[i] == '\"')
 				make_d_quote_token(line, &i, token_list);
-			if (line[i] == '\'')
+			else if (line[i] == '\'')
 				make_s_quote_token(line, &i, token_list);
 			/* parenthesis case */
-			if (line[i] == '(')
+			else if (line[i] == '(')
 				make_parenthesis_token(line, &i, token_list);
 			/* | case */
-			if (line[i] == '|' && line[i] != '|')
+			else if (line[i] == '|' && line[i] != '|')
 				lstadd_token_node(ft_substr(line, i, 1), token_list);
-			if (line[i] == '|' && line[i] == '|')
+			else if (line[i] == '|' && line[i] == '|')
 			{
 				lstadd_token_node(ft_substr(line, i, 2), token_list);
 				i++;
 			}
 			/* & case */
-			if (line[i] == '&' && line[i] != '&') // -> 예외처리!
+			else if (line[i] == '&' && line[i] != '&') // -> 예외처리!
 				lstadd_token_node(ft_substr(line, i, 1), token_list);
-			if (line[i] == '&' && line[i] == '&')
+			else if (line[i] == '&' && line[i] == '&')
 			{
 				lstadd_token_node(ft_substr(line, i, 2), token_list);
 				i++;
 			}
 			/* < case */
-			if (line[i] == '<' && line[i] != '<')
+			else if (line[i] == '<' && line[i] != '<')
 				lstadd_token_node(ft_substr(line, i, 1), token_list);
-			if (line[i] == '<' && line[i] == '<')
+			else if (line[i] == '<' && line[i] == '<')
 			{
 				lstadd_token_node(ft_substr(line, i, 2), token_list);
 				i++;
 			}
 			/* > case */
-			if (line[i] == '>' && line[i] != '>')
+			else if (line[i] == '>' && line[i] != '>')
 				lstadd_token_node(ft_substr(line, i, 1), token_list);
-			if (line[i] == '>' && line[i] == '>')
+			else if (line[i] == '>' && line[i] == '>')
 			{
 				lstadd_token_node(ft_substr(line, i, 2), token_list);
 				i++;
 			}
 			/* else */
-			lstadd_token_node(ft_substr(line, i, 1), token_list);
+			else
+				lstadd_token_node(ft_substr(line, i, 1), token_list);
 			i++;
 		}
 	}
