@@ -71,9 +71,14 @@ typedef	struct s_tree
 }				t_tree;
 
 // 필요한 데이터 묶음.
-// typedef struct s_shinfo
-// {
-// }				t_shinfo;
+typedef struct s_shinfo
+{
+	t_tree		*tree;
+	t_contens	*contents;
+	t_token		*token;
+	char		*cli_str;
+	char		**line
+}				t_shinfo;
 
 int	g_status;
 
