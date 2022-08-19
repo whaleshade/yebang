@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/19 16:45:13 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/19 17:27:26 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	make_alnum_token(char *line, int *i, t_list **token_list)
 		len++;
 		(*i)++;
 	}
-	lstadd_token_node(ft_substr(line, *i - len, len), token_list);
+	if (len > 0)
+		lstadd_token_node(ft_substr(line, *i - len, len), token_list);
 }
 
 void	make_d_quote_token(char *line, int *i, t_list **token_list)
@@ -98,6 +99,7 @@ void	make_parenthesis_token(char *line, int *i, t_list **token_list)
 		(*i)++;
 	}
 	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list);
+	(*i)--;
 }
 
 void	make_tokens_list(const char *str, t_list **token_list)
