@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/19 17:49:16 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/19 17:56:08 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,33 +125,33 @@ void	make_tokens_list(const char *str, t_list **token_list)
 			else if (line[i] == '(')
 				make_parenthesis_token(line, &i, token_list);
 			/* | case */
-			else if (line[i] == '|' && line[i] != '|')
+			else if (line[i] == '|' && line[i + 1] != '|')
 				lstadd_token_node(ft_substr(line, i, 1), token_list);
-			else if (line[i] == '|' && line[i] == '|')
+			else if (line[i] == '|' && line[i + 1] == '|')
 			{
 				lstadd_token_node(ft_substr(line, i, 2), token_list);
 				i++;
 			}
 			/* & case */
-			else if (line[i] == '&' && line[i] != '&') // -> 예외처리!
+			else if (line[i] == '&' && line[i + 1] != '&') // -> 예외처리!
 				lstadd_token_node(ft_substr(line, i, 1), token_list);
-			else if (line[i] == '&' && line[i] == '&')
+			else if (line[i] == '&' && line[i + 1] == '&')
 			{
 				lstadd_token_node(ft_substr(line, i, 2), token_list);
 				i++;
 			}
 			/* < case */
-			else if (line[i] == '<' && line[i] != '<')
+			else if (line[i] == '<' && line[i + 1] != '<')
 				lstadd_token_node(ft_substr(line, i, 1), token_list);
-			else if (line[i] == '<' && line[i] == '<')
+			else if (line[i] == '<' && line[i + 1] == '<')
 			{
 				lstadd_token_node(ft_substr(line, i, 2), token_list);
 				i++;
 			}
 			/* > case */
-			else if (line[i] == '>' && line[i] != '>')
+			else if (line[i] == '>' && line[i + 1] != '>')
 				lstadd_token_node(ft_substr(line, i, 1), token_list);
-			else if (line[i] == '>' && line[i] == '>')
+			else if (line[i] == '>' && line[i + 1] == '>')
 			{
 				lstadd_token_node(ft_substr(line, i, 2), token_list);
 				i++;
