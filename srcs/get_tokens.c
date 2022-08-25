@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/25 19:32:53 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/25 21:42:24 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,10 @@ void	make_parenthesis_token(char *line, int *i, t_list **token_list)
 					lcnt++;
 			}
 		}
-		len++;
-		(*i)++;
+		else
+		{	len++;
+			(*i)++;
+		}
 	}
 	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list);
 	(*i)--;

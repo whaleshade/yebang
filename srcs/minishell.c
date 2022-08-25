@@ -105,7 +105,7 @@ int	main(int ac, char **av, char **envp)
 	//ft_nodisplay_ctrlx_set();
 
 	/* CMD LOOP */
-	shell_loop(); //READ, PASE, EXEC
+	shell_loop(); //READ, PARSE, EXEC
 	/* TERMINATE PROC */
 	//YOUR CODE HERE
 	return (0);
