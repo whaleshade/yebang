@@ -13,6 +13,12 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct s_global
+{
+	int		status;
+	char	**env;
+} t_global;
+
 # include "../libft/libft.h"
 
 # define LOOP 1

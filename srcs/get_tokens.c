@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/19 17:56:08 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/25 19:32:53 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ void	make_d_quote_token(char *line, int *i, t_list **token_list)
 	{
 		len++;
 		(*i)++;
+		if (line[*i - 1] == '\\' && line[*i] == '\"')
+		{
+			len++;
+			(*i)++;
+		}
 	}
 	if (line[*i] == '\"')
 	{

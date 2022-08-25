@@ -61,6 +61,7 @@ void	shell_loop()
 		cli_str = readline("minsh$ ");
 		if (cli_str)
 		{
+			//if 끝에 백슬래시
 			line = ft_split(cli_str, ';');
 			i = 0;
 			while (line[i])
@@ -87,14 +88,18 @@ void	shell_loop()
 	}
 }
 
+t_global	g_var;
 
-int	main()
+int	main(int ac, char **av, char **envp)
 {
 	/* START SCREEN */
 	ft_start_screen();
 
 	/* READ ENV */
-	//YOUR CODE HERE
+	(void)ac;
+	(void)av;
+	g_var.status = 0;
+	g_var.env = envp;
 
 	/* TERMINAL INIT SETTINGS */
 	//ft_nodisplay_ctrlx_set();
