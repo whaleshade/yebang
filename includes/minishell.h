@@ -13,13 +13,15 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+# include "../lib/libft/libft.h"
+# include "../lib/ft_printf/ft_printf.h"
+# include "../lib/get_next_line/get_next_line.h"
+
 typedef struct s_global
 {
 	int		status;
 	char	**env;
 } t_global;
-
-# include "../libft/libft.h"
 
 # define LOOP 1
 
@@ -29,6 +31,8 @@ typedef struct s_global
 # define SUCCESS 0
 # define ERROR -1
 
+void	ft_start_screen(void);
 void	rl_replace_line (const char *text, int clear_undo);
+t_list	*get_token_list(char *line);
 
 #endif
