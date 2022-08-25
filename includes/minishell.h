@@ -69,6 +69,12 @@ typedef struct s_minishell
 	t_token		*tokens;
 }				t_minishell;
 
+typedef struct g_global
+{
+	int		status;
+	char	**env;
+};
+
 void	rl_replace_line (const char *text, int clear_undo);
 
 /*	welcome_screen.c	*/

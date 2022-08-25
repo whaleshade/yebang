@@ -27,11 +27,14 @@ void	add_token(t_token **tokens, t_token *new)
 
 t_token	*last_token(t_token	*tokens)
 {
+	t_token	*buf;
+
 	if (!tokens)
 		return (NULL);
-	while(tokens->next)
-		tokens = tokens->next;
-	return (tokens);
+	buf = tokens;
+	while(buf->next)
+		buf = buf->next;
+	return (buf);
 }
 
 void	del_token(t_token *tokens)
