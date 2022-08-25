@@ -16,35 +16,35 @@
 # include "../lib/ft_printf/ft_printf.h"
 # include "../lib/get_next_line/get_next_line.h"
 
+# define TRUE	1
+# define FALSE	0
+
 enum	e_token
 {
-	E_OR,
-	E_AND,
-	E_PIPE,
-	E_CMD,
-	// 홀수일 경우 fail, 짝수일 경우 짝이 맞는 것. 또한 따옴표에 묶인 채 토큰에 저장된다.(변수 따로 지정할 것)
-	// ' : 안의 변수 등 무시 그대로 출력 된다.
-	// " : $이용해서 환경변수 사용할 경우 환경변수 출력되야 한다.
-	E_QUOTE,
-	// echo, redirection 뒤에 오는 모든 토큰은 띄어쓰기 기준으로 str로 간주, 이후 명령어에 따라 예외처리, 한 토큰에 저장됩니다.
-	E_STR,
-	E_INP_RD,
-	E_OUT_RD,
-	E_APP_RD,
-	E_HRERDOC,
-	// 홀수일 경우 fail, 짝수일 경우 짝이 맞는 것, 뿐만 아니라 괄호 짝이 순서대로 맞는지 확인합니다. 한 토큰에 저장 됩니다.
-	E_BRACKET
+	NONE,
+	OR,
+	AND,
+	PIPE,
+	CMD,
+	S_QUOTE,
+	D_QUOTE,
+	STR,
+	INP_RD,
+	OUT_RD,
+	APP_RD,
+	HERE_DOC,
+	L_PARENS,
+	R_PARENS
 };
 
 enum	e_type
 {
-	ET_OR,
-	ET_AND,
-	ET_PIPE,
-	ET_WORD,
-	ET_REDIR,
-	// 해당 타입의 경우 -> subshell동작할 수 있도록 합니다.
-	ET_BRACKET
+	TK_OR,
+	TK_AND,
+	TK_PIPE,
+	TK_WORD,
+	TK_REDIR,
+	TK_PARENS
 };
 
 // token : 가장 작은 단위로 나눔
@@ -55,34 +55,55 @@ typedef struct s_token
 	struct s_token	*next;
 }				t_token;
 
-// tree 설정 root노드를 설정한 후 left, right를 통해서 트리 이동 가능.
-typedef struct s_contents
+typedef struct s_node
 {
 	enum e_type		type;
-	t_token			*contents;
-	struct s_tree	*left;
-	struct s_tree	*right;
-}				t_contens;
+	t_token			*tokens;
+	struct s_node	*left;
+	struct s_node	*right;
+}				t_node;
 
-// root노드를 가리키는 더미노드
-typedef	struct s_tree
+typedef struct s_minishell
 {
-	t_contens	*root;
-}				t_tree;
+	t_node		*root;
+	t_token		*tokens;
+}				t_minishell;
 
-// 필요한 데이터 묶음.
-typedef struct s_shinfo
-{
-	t_tree		*tree;
-	t_contens	*contents;
-	t_token		*token;
-	char		*cli_str;
-	char		**line
-}				t_shinfo;
+void	rl_replace_line (const char *text, int clear_undo);
 
-int	g_status;
-
-extern char	**env;
+/*	welcome_screen.c	*/
 void	welcome_screen(void);
+
+/*	utils_parsing.c	*/
+t_token	*is_and_or_pipe(t_token	*tokens);
+void	set_node_type(t_node *node, t_token *token);
+/*	parsing.c	*/
+void	split_line(const char *str, t_minishell *sh);
+
+/*	signal_handler.c	*/
+void	set_signal(void);
+
+/*	check_syntax_error	*/
+int		check_syntax_error(t_token **tokens, char *line);
+
+/*	utils_syntax_error.c	*/
+int		check_token_type(t_token **tokens, char *line, int i);
+int		check_type_double(t_token **tokens, char *line, int i, int type);
+int		is_quote(char c, int flag);
+
+/*	utils_token.c	*/
+t_token	*new_token(char *data, int type);
+void	add_token(t_token **tokens, t_token *new);
+t_token	*last_token(t_token	*tokens);
+void	del_token(t_token *tokens);
+
+/*	utils_node.c	*/
+t_node	*create_node(t_token *tokens);
+void	insert_node(t_token *token, t_token *root);
+void	del_node(t_node *node);
+
+/*	utils.c	*/
+void	ft_perror(char *str);
+int		whitespace(char *line);
 
 #endif

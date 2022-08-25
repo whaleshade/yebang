@@ -27,13 +27,21 @@ GNL				= get_next_line/libgnl.a
 FTPRINT			= ft_printf/libftprintf.a
 
 HEADERS			= includes
-DIR_O			= obj
-DIR_S 			= srcs
 
+DIR_S 			= srcs
 SOURCES			= 					\
 				main.c				\
-				welcome_screen.c
+				check_syntax_error.c\
+				parsing.c			\
+				signal_handler.c	\
+				utils_node.c		\
+				utils_parsing.c		\
+				utils_syntax_error.c\
+				utils_token.c		\
+				utils.c				\
+				welcome_screen.c	
 
+DIR_O			= objs
 SRCS			= $(addprefix $(DIR_S)/,$(SOURCES))
 OBJS			= $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
