@@ -1,6 +1,7 @@
 #include "../includes/minishell.h"
 
 static void	shell_loop(t_minishell *sh);
+t_global *g;
 
 int	main(int ac, char *av[], char *envp[])
 {
@@ -8,6 +9,9 @@ int	main(int ac, char *av[], char *envp[])
 
 	(void)ac;
 	(void)av;
+	g = ft_calloc(1, sizeof(t_global));
+	g->status = 0;
+	g->env = envp;
 	sh = ft_calloc(1, sizeof(sh));
 	welcome_screen();
 	set_signal();

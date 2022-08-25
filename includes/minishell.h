@@ -69,11 +69,11 @@ typedef struct s_minishell
 	t_token		*tokens;
 }				t_minishell;
 
-typedef struct g_global
+typedef struct s_global
 {
 	int		status;
 	char	**env;
-};
+}				t_global;
 
 void	rl_replace_line (const char *text, int clear_undo);
 
