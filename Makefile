@@ -16,7 +16,7 @@ LINE_CLEAR		=	"\x1b[1A\x1b[M"
 NAME			= minishell
 
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS			= -Wall -Wextra -Werror -g3
 RM				= rm -rf
 
 LIB_READ		= readline

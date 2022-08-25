@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/25 21:42:24 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/25 22:45:04 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,20 +78,22 @@ void	make_parenthesis_token(char *line, int *i, t_list **token_list)
 	int		len;
 	int		lcnt;
 	int		rcnt;
+	int		line_len;
 
 	lcnt = 1;
 	rcnt = 0;
 	(*i)++;
 	len = 0;
+	line_len = ft_strlen(line);
 
-	while (line[*i] && (lcnt != rcnt))
+	while (line[*i] && (lcnt != rcnt) && *i < line_len)
 	{
 		if (line[*i] == '(')
 			lcnt++;
 		if (line[*i] == ')')
 		{
 			rcnt++;
-			while (line[*i] && (lcnt != rcnt))
+			while (line[*i] && (lcnt != rcnt) && *i < line_len)
 			{
 				len++;
 				(*i)++;
@@ -101,10 +103,8 @@ void	make_parenthesis_token(char *line, int *i, t_list **token_list)
 					lcnt++;
 			}
 		}
-		else
-		{	len++;
-			(*i)++;
-		}
+		len++;
+		(*i)++;
 	}
 	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list);
 	(*i)--;
