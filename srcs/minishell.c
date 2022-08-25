@@ -93,7 +93,7 @@ t_global	g_var;
 int	main(int ac, char **av, char **envp)
 {
 	/* START SCREEN */
-	ft_start_screen();
+	welcome_screen();
 
 	/* READ ENV */
 	(void)ac;
