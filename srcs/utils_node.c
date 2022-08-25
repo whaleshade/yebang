@@ -29,10 +29,12 @@ void	insert_node(t_token *token, t_token *root)
 
 void	del_node(t_node *node)
 {
-	if (node == NULL)
-		return ;
-	del_node(node->left);
-	del_node(node->right);
-	del_token(node->tokens);
-	free(node);
+	if (node)
+	{
+		del_node(node->left);
+		del_node(node->right);
+		del_token(node->tokens);
+		free(node);
+		node = NULL;
+	}
 }

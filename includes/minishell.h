@@ -90,16 +90,16 @@ void	split_line(const char *str, t_minishell *sh);
 void	set_signal(void);
 
 /*	check_syntax_error	*/
-int		check_syntax_error(t_token **tokens, char *line);
+int		check_syntax_error(t_token *tokens, char *line);
 
 /*	utils_syntax_error.c	*/
-int		check_token_type(t_token **tokens, char *line, int i);
-int		check_type_double(t_token **tokens, char *line, int i, int type);
+int		check_token_type(t_token *tokens, char *line, int i);
+int		check_type_double(t_token *tokens, char *line, int i, int type);
 int		is_quote(char c, int flag);
 
 /*	utils_token.c	*/
 t_token	*new_token(char *data, int type);
-void	add_token(t_token **tokens, t_token *new);
+void	add_token(t_token *tokens, t_token *new);
 t_token	*last_token(t_token	*tokens);
 void	del_token(t_token *tokens);
 

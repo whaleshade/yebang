@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int	check_token_type(t_token **tokens, char *line, int i)
+int	check_token_type(t_token *tokens, char *line, int i)
 {
 	int	type;
 
@@ -27,7 +27,7 @@ int	check_token_type(t_token **tokens, char *line, int i)
 	return (type);
 }
 
-int	check_type_double(t_token **tokens, char *line, int i, int type)
+int	check_type_double(t_token *tokens, char *line, int i, int type)
 {
 	if (line[i + 1])
 	{

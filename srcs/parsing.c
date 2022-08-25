@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-static int	get_token_list(t_token **tokens, char *str);
+static int	get_token_list(t_token *tokens, char *str);
 static void	parse(t_node *node);
 
 void	split_line(const char *str, t_minishell *sh)
@@ -13,7 +13,7 @@ void	split_line(const char *str, t_minishell *sh)
 	while (line[++i])
 	{
 		// 오류가 있을 경우
-		if (!get_token_list(&sh->tokens, line[i]))
+		if (!get_token_list(sh->tokens, line[i]))
 			del_token(sh->tokens);
 		else
 		{
@@ -27,7 +27,7 @@ void	split_line(const char *str, t_minishell *sh)
 	free(line);
 }
 
-static int	get_token_list(t_token **tokens, char *str)
+static int	get_token_list(t_token *tokens, char *str)
 {
 	char	*line;
 

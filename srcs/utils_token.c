@@ -12,17 +12,19 @@ t_token	*new_token(char *data, int type)
 	return (new);
 }
 
-void	add_token(t_token **tokens, t_token *new)
+void	add_token(t_token *tokens, t_token *new)
 {
 	t_token	*buf;
 
-	if (!tokens || !new)
+	if (!new || !tokens)
 		return ;
-	buf = last_token(*tokens);
-	if (!buf)
-		*tokens = new;
-	else
-		buf->next = new;
+	if (!tokens)
+	{
+		tokens = new;
+		return ;
+	}
+	buf = last_token(tokens);
+	buf->next = new;
 }
 
 t_token	*last_token(t_token	*tokens)
@@ -48,4 +50,5 @@ void	del_token(t_token *tokens)
 		free(del->data);
 		free(del->next);
 	}
+	free(tokens);
 }
