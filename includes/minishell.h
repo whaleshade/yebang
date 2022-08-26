@@ -46,8 +46,9 @@ enum	e_token
 	OUT_RD,
 	APP_RD,
 	HERE_DOC,
-	L_PARENS,
-	R_PARENS
+	PARENS,
+	L_PAREN,
+	R_PAREN
 };
 
 enum	e_type
@@ -85,6 +86,6 @@ typedef struct s_minishell
 /* token_lst_func.c */
 t_token	*token_lstlast(t_token *lst);
 void	token_lstadd_back(t_token **lst, t_token *new);
-t_token	*token_lstnew(void *data);
+t_token	*token_lstnew(void *data, enum e_token type);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 16:43:44 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/26 16:57:07 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/26 17:50:37 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_token	*token_lstnew(void *data)
+t_token	*token_lstnew(void *data, enum e_token type)
 {
 	t_token	*new_lst;
 
@@ -20,6 +20,7 @@ t_token	*token_lstnew(void *data)
 	if (!new_lst)
 		return (NULL);
 	new_lst->data = data;
+	new_lst->type = type;
 	new_lst->next = NULL;
 	return (new_lst);
 }

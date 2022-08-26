@@ -42,6 +42,7 @@ void	show_list_contents(t_token *list)
 	tmp = list;
 	while (tmp)
 	{
+		// printf("[%s {type : %d}]", (char *)tmp->data, (int)tmp->type);
 		printf("[%s]", (char *)tmp->data);
 		tmp = tmp->next;
 	}

@@ -6,13 +6,13 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/26 17:19:09 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/26 17:44:22 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	lstadd_token_node(char *token, t_token **token_list);
+void	lstadd_token_node(char *token, t_token **token_list, enum e_token type);
 
 void	make_alnum_token(char *line, int *i, t_token **token_list)
 {
@@ -25,7 +25,7 @@ void	make_alnum_token(char *line, int *i, t_token **token_list)
 		(*i)++;
 	}
 	if (len > 0)
-		lstadd_token_node(ft_substr(line, *i - len, len), token_list);
+		lstadd_token_node(ft_substr(line, *i - len, len), token_list, CMD);
 }
 
 void	make_d_quote_token(char *line, int *i, t_token **token_list)
@@ -49,7 +49,7 @@ void	make_d_quote_token(char *line, int *i, t_token **token_list)
 		len++;
 		(*i)++;
 	}
-	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list);
+	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list, D_QUOTE);
 	(*i)--;
 }
 
@@ -69,7 +69,7 @@ void	make_s_quote_token(char *line, int *i, t_token **token_list)
 		len++;
 		(*i)++;
 	}
-	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list);
+	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list, S_QUOTE);
 	(*i)--;
 }
 
@@ -106,7 +106,7 @@ void	make_parenthesis_token(char *line, int *i, t_token **token_list)
 		len++;
 		(*i)++;
 	}
-	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list);
+	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list, PARENS);
 	(*i)--;
 }
 
@@ -133,49 +133,49 @@ void	make_tokens_list(const char *str, t_token **token_list)
 				make_parenthesis_token(line, &i, token_list);
 			/* | case */
 			else if (line[i] == '|' && line[i + 1] != '|')
-				lstadd_token_node(ft_substr(line, i, 1), token_list);
+				lstadd_token_node(ft_substr(line, i, 1), token_list, PIPE);
 			else if (line[i] == '|' && line[i + 1] == '|')
 			{
-				lstadd_token_node(ft_substr(line, i, 2), token_list);
+				lstadd_token_node(ft_substr(line, i, 2), token_list, OR);
 				i++;
 			}
 			/* & case */
 			else if (line[i] == '&' && line[i + 1] != '&') // -> 예외처리!
-				lstadd_token_node(ft_substr(line, i, 1), token_list);
+				lstadd_token_node(ft_substr(line, i, 1), token_list, NONE);
 			else if (line[i] == '&' && line[i + 1] == '&')
 			{
-				lstadd_token_node(ft_substr(line, i, 2), token_list);
+				lstadd_token_node(ft_substr(line, i, 2), token_list, AND);
 				i++;
 			}
 			/* < case */
 			else if (line[i] == '<' && line[i + 1] != '<')
-				lstadd_token_node(ft_substr(line, i, 1), token_list);
+				lstadd_token_node(ft_substr(line, i, 1), token_list, INP_RD);
 			else if (line[i] == '<' && line[i + 1] == '<')
 			{
-				lstadd_token_node(ft_substr(line, i, 2), token_list);
+				lstadd_token_node(ft_substr(line, i, 2), token_list, HERE_DOC);
 				i++;
 			}
 			/* > case */
 			else if (line[i] == '>' && line[i + 1] != '>')
-				lstadd_token_node(ft_substr(line, i, 1), token_list);
+				lstadd_token_node(ft_substr(line, i, 1), token_list, OUT_RD);
 			else if (line[i] == '>' && line[i + 1] == '>')
 			{
-				lstadd_token_node(ft_substr(line, i, 2), token_list);
+				lstadd_token_node(ft_substr(line, i, 2), token_list, APP_RD);
 				i++;
 			}
 			/* else */
 			else
-				lstadd_token_node(ft_substr(line, i, 1), token_list);
+				lstadd_token_node(ft_substr(line, i, 1), token_list, NONE); //백슬래시, 달러 케이스 추가해줘야 하나?
 			i++;
 		}
 	}
 }
 
-void	lstadd_token_node(char *token, t_token **token_list)
+void	lstadd_token_node(char *token, t_token **token_list, enum e_token type)
 {
 	t_token	*tmp;
 
-	tmp = token_lstnew(token);
+	tmp = token_lstnew(token, type);
 	if (!tmp)
 	{
 		ft_printf("Error\n");
