@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/27 01:35:45 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/27 01:52:27 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,20 @@ void	make_parenthesis_token(char *line, int *i, t_token **token_list)
 		(*i)--;
 }
 
+void	make_cmd_option_token(char *line, int *i, t_token **token_list)
+{
+	int		len;
+
+	(*i)++;
+	len = 0;
+	while (line[*i] && ft_isalnum(line[*i]))
+	{
+		len++;
+		(*i)++;
+	}
+	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list, CMD_OPT);
+	(*i)--;
+}
 
 void	make_tokens_list(const char *str, t_token **token_list)
 {
@@ -133,6 +147,9 @@ void	make_tokens_list(const char *str, t_token **token_list)
 				lstadd_token_node(ft_substr(line, i, 2), token_list, OR);
 				i++;
 			}
+			/* option case */
+			else if (line[i] == '-')
+				make_cmd_option_token(line, &i, token_list);
 			/* & case */
 			else if (line[i] == '&' && line[i + 1] != '&') // -> 예외처리!
 				lstadd_token_node(ft_substr(line, i, 1), token_list, NONE);

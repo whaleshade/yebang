@@ -39,6 +39,7 @@ enum	e_token
 	AND,
 	PIPE,
 	CMD,
+	CMD_OPT,
 	S_QUOTE,
 	D_QUOTE,
 	STR,
