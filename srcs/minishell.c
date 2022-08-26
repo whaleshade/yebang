@@ -6,7 +6,7 @@
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 01:24:52 by yeblee            #+#    #+#             */
-/*   Updated: 2022/08/26 01:46:48 by yeblee           ###   ########.fr       */
+/*   Updated: 2022/08/27 00:22:17 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	shell_loop(void);
 static void	sig_handler(int	signo);
-static void	show_list_contents(t_list *list);
+// static void	show_list_contents(t_list *list);
 // static void	ft_nodisplay_ctrlx_set(void);
 // static void	ft_perror(char *str);
 
@@ -46,11 +46,14 @@ int	main(int ac, char **av, char **envp)
 
 static void	shell_loop()
 {
-	char	*cli_str;
-	char	**line;
-	int		i;
-	t_list	*token_list;
-
+	char		*cli_str;
+	char		**line;
+	int			i;
+	t_minishell	sh;
+	
+	sh.list = ft_calloc(1,sizeof(t_list));
+	sh.root = ft_calloc(1,sizeof(t_node));
+	sh.tokens = ft_calloc(1,sizeof(t_token));
 	while (LOOP)
 	{
 		signal(SIGINT, sig_handler); // ctrl + c ... before fork(), set default
@@ -63,14 +66,16 @@ static void	shell_loop()
 			i = 0;
 			while (line[i])
 			{
-				token_list = get_token_list(line[i]);
-				show_list_contents(token_list);
+				sh.list = get_token_list(line[i]);
+				// show_list_contents(token_list);
 				/*
-				* 2022.08.26 - yeblee
-				* token_list를 t_token형식에 맞게 적용
-				* - 따옴표를 제외한 token_list 화이트 스페이스 제거, type 적용 
+				* 2022.08.26 - 2022.08.07
+				* yeblee - tokenizer(sh, list);
+				* : token_list를 t_token형식에 맞게 적용
+				*   따옴표를 제외한 token_list 화이트 스페이스 제거, type 적용 
 				*/
-			
+				tokenizer(&sh);
+				
 				i++;
 			}
 
@@ -103,6 +108,7 @@ static void	sig_handler(int	signo)
 	return ;
 }
 
+/*
 static void	show_list_contents(t_list *list)
 {
 	t_list	*tmp;
@@ -115,7 +121,7 @@ static void	show_list_contents(t_list *list)
 	}
 	printf("\n");
 }
-
+*/
 //use tcsetattr and tcgetattr to modify your terminal settings.
 //clear the ECHOCTL bit flag to suppress output from Ctrl-based signals.
 /*

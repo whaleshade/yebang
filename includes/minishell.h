@@ -31,7 +31,6 @@
 
 enum	e_token
 {
-	NONE,
 	OR,
 	AND,
 	PIPE,
@@ -84,10 +83,14 @@ typedef struct s_minishell
 {
 	t_node		*root;
 	t_token		*tokens;
+	t_list		*list;
 }				t_minishell;
 
 void	ft_start_screen(void);
 void	rl_replace_line (const char *text, int clear_undo);
 t_list	*get_token_list(char *line);
-
+void	tokenizer(t_minishell *sh);
+void	insert_token(t_token *tokens, char *list);
+t_token	*last_token(t_token *tokens);
+int		token_type(char *content);
 #endif

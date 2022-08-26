@@ -6,12 +6,11 @@
 #    By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/26 01:26:31 by yeblee            #+#    #+#              #
-#    Updated: 2022/08/26 01:36:47 by yeblee           ###   ########.fr        #
+#    Updated: 2022/08/26 03:47:02 by yeblee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ================ Color Variables ================ #
-
 BLACK			= 	"\033[0;30m"
 GRAY			= 	"\033[1;30m"
 RED				=	"\033[0;31m"
@@ -22,13 +21,12 @@ CYAN			=	"\033[0;36m"
 WHITE			=	"\033[1;37m"
 EOC				=	"\033[0;0m"
 LINE_CLEAR		=	"\x1b[1A\x1b[M"
-
 # ================================================= #
 
 NAME			= minishell
 
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS			= -Wall -Wextra -Werror #-g3 -fsanitize=address
 RM				= rm -rf
 
 LIB_READ		= -l readline
@@ -43,10 +41,12 @@ FTPRINT			= ft_printf/libftprintf.a
 HEADERS			= includes
 
 DIR_S 			= srcs
-SOURCES			= 			\
-				minishell.c	\
-				get_tokens.c\
-				start_screen.c
+SOURCES			= 				\
+				minishell.c		\
+				get_tokens.c	\
+				start_screen.c	\
+				tokenizer.c		\
+				utils_token.c	
 
 DIR_O			= objs
 SRCS			= $(addprefix $(DIR_S)/,$(SOURCES))
