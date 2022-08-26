@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/27 00:29:40 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/27 01:26:53 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,28 +78,29 @@ void	make_parenthesis_token(char *line, int *i, t_list **token_list)
 	int		len;
 	int		paren_cnt;
 	int		line_len;
+	int		sign;
 
+	sign = 0;
 	paren_cnt = 1;
 	line_len = ft_strlen(line);
-	if (*i + 1 < line_len - 1)
+	if (*i + 1 <= line_len)
+	{
+		sign = 1;
 		(*i)++;
-	len = 1;
-	while (line[*i] && *i < line_len - 1)
+	}
+	len = 0;
+	while (line[*i] && *i < line_len && paren_cnt != 0)
 	{
 		if (line[*i] == '(')
-		{
 			paren_cnt++;
-		}
 		if (line[*i] == ')')
-		{
 			paren_cnt--;
-		}
-		if (paren_cnt == 0)
-			break ;
 		len++;
 		(*i)++;
 	}
-	lstadd_token_node(ft_substr(line, *i - len, len + 1), token_list);
+	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list);
+	if (sign == 1)
+		(*i)--;
 }
 
 void	make_tokens_list(const char *str, t_list **token_list)
@@ -112,7 +113,6 @@ void	make_tokens_list(const char *str, t_list **token_list)
 	while (line[i])
 	{
 		make_alnum_token(line, &i, token_list);
-
 		while (line[i] && !ft_isalnum(line[i]))
 		{
 			/* quotation case */
@@ -155,6 +155,7 @@ void	make_tokens_list(const char *str, t_list **token_list)
 				lstadd_token_node(ft_substr(line, i, 2), token_list);
 				i++;
 			}
+			else if (line[i] == ' '){}
 			/* else */
 			else
 				lstadd_token_node(ft_substr(line, i, 1), token_list);
