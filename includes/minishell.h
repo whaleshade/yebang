@@ -82,11 +82,9 @@ typedef struct s_minishell
 	t_token		*tokens;
 }				t_minishell;
 
-typedef struct s_global
-{
-	int		status;
-	char	**env;
-}				t_global;
-
+/* token_lst_func.c */
+t_token	*token_lstlast(t_token *lst);
+void	token_lstadd_back(t_token **lst, t_token *new);
+t_token	*token_lstnew(void *data);
 
 #endif

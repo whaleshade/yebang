@@ -1,8 +1,9 @@
 #include "../includes/minishell.h"
 
 /* to be organized */
-#include "start_screen.c"
+#include "welcome_screen.c"
 #include "get_tokens.c"
+#include "token_lst_func.c"
 
 void	ft_perror(char *str)
 {
