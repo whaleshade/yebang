@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/26 17:09:06 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/27 00:29:40 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,38 +76,30 @@ void	make_s_quote_token(char *line, int *i, t_list **token_list)
 void	make_parenthesis_token(char *line, int *i, t_list **token_list)
 {
 	int		len;
-	int		lcnt;
-	int		rcnt;
+	int		paren_cnt;
 	int		line_len;
 
-	lcnt = 1;
-	rcnt = 0;
+	paren_cnt = 1;
 	line_len = ft_strlen(line);
 	if (*i + 1 < line_len - 1)
 		(*i)++;
-	len = 0;
-	while (line[*i] && (lcnt != rcnt) && *i < line_len - 1)
+	len = 1;
+	while (line[*i] && *i < line_len - 1)
 	{
 		if (line[*i] == '(')
-			lcnt++;
+		{
+			paren_cnt++;
+		}
 		if (line[*i] == ')')
 		{
-			rcnt++;
-			while (line[*i] && (lcnt != rcnt) && *i < line_len - 1)
-			{
-				len++;
-				(*i)++;
-				if (line[*i] == ')')
-					rcnt++;
-				if (line[*i] == '(')
-					lcnt++;
-			}
+			paren_cnt--;
 		}
+		if (paren_cnt == 0)
+			break ;
 		len++;
 		(*i)++;
 	}
-	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list);
-	(*i)--;
+	lstadd_token_node(ft_substr(line, *i - len, len + 1), token_list);
 }
 
 void	make_tokens_list(const char *str, t_list **token_list)
