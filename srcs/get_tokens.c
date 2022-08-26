@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/26 17:44:22 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/27 01:35:45 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,39 +76,33 @@ void	make_s_quote_token(char *line, int *i, t_token **token_list)
 void	make_parenthesis_token(char *line, int *i, t_token **token_list)
 {
 	int		len;
-	int		lcnt;
-	int		rcnt;
+	int		paren_cnt;
 	int		line_len;
+	int		sign;
 
-	lcnt = 1;
-	rcnt = 0;
+	sign = 0;
+	paren_cnt = 1;
 	line_len = ft_strlen(line);
-	if (*i + 1 < line_len - 1)
+	if (*i + 1 <= line_len)
+	{
+		sign = 1;
 		(*i)++;
+	}
 	len = 0;
-	while (line[*i] && (lcnt != rcnt) && *i < line_len - 1)
+	while (line[*i] && *i < line_len && paren_cnt != 0)
 	{
 		if (line[*i] == '(')
-			lcnt++;
+			paren_cnt++;
 		if (line[*i] == ')')
-		{
-			rcnt++;
-			while (line[*i] && (lcnt != rcnt) && *i < line_len - 1)
-			{
-				len++;
-				(*i)++;
-				if (line[*i] == ')')
-					rcnt++;
-				if (line[*i] == '(')
-					lcnt++;
-			}
-		}
+			paren_cnt--;
 		len++;
 		(*i)++;
 	}
 	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list, PARENS);
-	(*i)--;
+	if (sign == 1)
+		(*i)--;
 }
+
 
 void	make_tokens_list(const char *str, t_token **token_list)
 {
@@ -163,6 +157,8 @@ void	make_tokens_list(const char *str, t_token **token_list)
 				lstadd_token_node(ft_substr(line, i, 2), token_list, APP_RD);
 				i++;
 			}
+			/* space outside quote to be excluded */
+			else if (line[i] == ' '){}
 			/* else */
 			else
 				lstadd_token_node(ft_substr(line, i, 1), token_list, NONE); //백슬래시, 달러 케이스 추가해줘야 하나?
