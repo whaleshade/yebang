@@ -35,14 +35,14 @@ void	sig_handler(int	signo)
 	return ;
 }
 
-void	show_list_contents(t_list *list)
+void	show_list_contents(t_token *list)
 {
-	t_list	*tmp;
+	t_token	*tmp;
 
 	tmp = list;
 	while (tmp)
 	{
-		printf("[%s]", (char *)tmp->content);
+		printf("[%s]", (char *)tmp->data);
 		tmp = tmp->next;
 	}
 	printf("\n");
@@ -53,7 +53,7 @@ void	shell_loop()
 	char	*cli_str;
 	char	**line;
 	int		i;
-	t_list	*token_list;
+	t_token	*token_list;
 
 	while (LOOP)
 	{

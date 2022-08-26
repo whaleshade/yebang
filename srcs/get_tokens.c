@@ -6,15 +6,15 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/26 17:06:30 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/26 17:19:09 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	lstadd_token_node(char *token, t_list **token_list);
+void	lstadd_token_node(char *token, t_token **token_list);
 
-void	make_alnum_token(char *line, int *i, t_list **token_list)
+void	make_alnum_token(char *line, int *i, t_token **token_list)
 {
 	int		len;
 
@@ -28,7 +28,7 @@ void	make_alnum_token(char *line, int *i, t_list **token_list)
 		lstadd_token_node(ft_substr(line, *i - len, len), token_list);
 }
 
-void	make_d_quote_token(char *line, int *i, t_list **token_list)
+void	make_d_quote_token(char *line, int *i, t_token **token_list)
 {
 	int		len;
 
@@ -53,7 +53,7 @@ void	make_d_quote_token(char *line, int *i, t_list **token_list)
 	(*i)--;
 }
 
-void	make_s_quote_token(char *line, int *i, t_list **token_list)
+void	make_s_quote_token(char *line, int *i, t_token **token_list)
 {
 	int		len;
 
@@ -73,7 +73,7 @@ void	make_s_quote_token(char *line, int *i, t_list **token_list)
 	(*i)--;
 }
 
-void	make_parenthesis_token(char *line, int *i, t_list **token_list)
+void	make_parenthesis_token(char *line, int *i, t_token **token_list)
 {
 	int		len;
 	int		lcnt;
@@ -110,7 +110,7 @@ void	make_parenthesis_token(char *line, int *i, t_list **token_list)
 	(*i)--;
 }
 
-void	make_tokens_list(const char *str, t_list **token_list)
+void	make_tokens_list(const char *str, t_token **token_list)
 {
 	char	*line;
 	int		i;
@@ -171,22 +171,22 @@ void	make_tokens_list(const char *str, t_list **token_list)
 	}
 }
 
-void	lstadd_token_node(char *token, t_list **token_list)
+void	lstadd_token_node(char *token, t_token **token_list)
 {
-	t_list	*tmp;
+	t_token	*tmp;
 
-	tmp = ft_lstnew(token);
+	tmp = token_lstnew(token);
 	if (!tmp)
 	{
 		ft_printf("Error\n");
 		exit(1);
 	}
-	ft_lstadd_back(token_list, tmp);
+	token_lstadd_back(token_list, tmp);
 }
 
-t_list	*get_token_list(char *line)
+t_token	*get_token_list(char *line)
 {
-	t_list	*token_list;
+	t_token	*token_list;
 
 	token_list = NULL;
 	make_tokens_list(line, &token_list);
