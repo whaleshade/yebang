@@ -14,7 +14,10 @@ void	split_line(const char *str, t_minishell *sh)
 	{
 		// 오류가 있을 경우
 		if (!get_token_list(sh->tokens, line[i]))
+		{
 			del_token(sh->tokens);
+			break ;
+		}
 		else
 		{
 			sh->root = create_node(sh->tokens);
@@ -32,7 +35,7 @@ static int	get_token_list(t_token *tokens, char *str)
 	char	*line;
 
 	line = ft_strtrim(str, " ");
-	if (!check_syntax_error(tokens, line))
+	if (!make_token(tokens, line))
 		return (FALSE);
 	return (TRUE);
 }
@@ -54,10 +57,6 @@ static void	parse(t_node *node)
 			del_token(root);
 			parse(node->left);
 			parse(node->right);
-		}
-		else
-		{
-			
 		}
 	}
 }

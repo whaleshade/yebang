@@ -89,12 +89,12 @@ void	split_line(const char *str, t_minishell *sh);
 /*	signal_handler.c	*/
 void	set_signal(void);
 
-/*	check_syntax_error	*/
-int		check_syntax_error(t_token *tokens, char *line);
+/*	make_token	*/
+int	make_token(t_token *tokens, char *line);
 
 /*	utils_syntax_error.c	*/
-int		check_token_type(t_token *tokens, char *line, int i);
-int		check_type_double(t_token *tokens, char *line, int i, int type);
+int		check_token_type(t_token *tokens, char *line, int *i);
+int		check_type_double(t_token *tokens, char *line, int *i, int type);
 int		is_quote(char c, int flag);
 
 /*	utils_token.c	*/

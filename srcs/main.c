@@ -2,21 +2,19 @@
 
 static void	shell_loop(t_minishell *sh);
 
-t_global *g_val;
+t_global g_val;
 
 int	main(int ac, char *av[], char *envp[])
 {
-	t_minishell	*sh;
+	t_minishell	sh;
 
 	(void)ac;
 	(void)av;
-	g_val = ft_calloc(1, sizeof(t_global));
-	g_val->status = 0;
-	g_val->env = envp;
-	sh = ft_calloc(1, sizeof(sh));
+	g_val.status = 0;
+	g_val.env = envp;
 	welcome_screen();
 	set_signal();
-	shell_loop(sh);
+	shell_loop(&sh);
 	return (0);
 }
 
