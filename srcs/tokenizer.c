@@ -6,7 +6,7 @@
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 01:52:34 by yeblee            #+#    #+#             */
-/*   Updated: 2022/08/27 23:42:09 by yeblee           ###   ########.fr       */
+/*   Updated: 2022/08/28 00:25:57 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,13 @@ static int	is_space(t_minishell *sh);
 
 void	tokenizer(t_minishell *sh)
 {
+	sh->tokens = NULL;
 	while (sh->list)
 	{
 		if (!is_space(sh))
 			insert_token(&sh->tokens, new_token((char *)sh->list->content));
 		sh->list = sh->list->next;
 	}
-	while (sh->tokens)
-	{
-		printf("sh->tokens(%p) : %s\n", sh->tokens, sh->tokens->data);
-		sh->tokens = sh->tokens->next;
-	}
-	printf("\n");
 }
 
 /*

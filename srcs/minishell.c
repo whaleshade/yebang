@@ -6,7 +6,7 @@
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 01:24:52 by yeblee            #+#    #+#             */
-/*   Updated: 2022/08/27 23:42:56 by yeblee           ###   ########.fr       */
+/*   Updated: 2022/08/28 00:35:03 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	shell_loop(void);
 static void	sig_handler(int	signo);
-// static void	show_list_contents(t_list *list);
+static void	show_list_contents(t_list *ist);
+static void	show_tokens_data(t_token *tokens);
 // static void	ft_nodisplay_ctrlx_set(void);
 // static void	ft_perror(char *str);
 
@@ -49,9 +50,8 @@ static void	shell_loop()
 	char		*cli_str;
 	char		**line;
 	int			i;
-	t_minishell	*sh;
+	t_minishell	sh;
 	
-	sh = ft_calloc(1, sizeof(t_minishell));
 	while (LOOP)
 	{
 		signal(SIGINT, sig_handler); // ctrl + c ... before fork(), set default
@@ -64,15 +64,15 @@ static void	shell_loop()
 			i = 0;
 			while (line[i])
 			{
-				ft_lstadd_back(&sh->list,  get_token_list(line[i]));
-				// show_list_contents(token_list);
+				ft_lstadd_back(&sh.list,  get_token_list(line[i]));
+				show_list_contents(sh.list);
 				/*
 				* yeblee - tokenizer(sh, list);
 				* : token_list를 t_token형식에 맞게 적용
 				*   따옴표를 제외한 token_list 화이트 스페이스 제거, type 적용 
 				*/
-				tokenizer(sh);
-				
+				tokenizer(&sh);
+				show_tokens_data(sh.tokens);
 				i++;
 			}
 
@@ -105,20 +105,39 @@ static void	sig_handler(int	signo)
 	return ;
 }
 
-/*
 static void	show_list_contents(t_list *list)
 {
 	t_list	*tmp;
 
 	tmp = list;
+	printf("\033[0;31m");
+	printf("list : \n");
 	while (tmp)
 	{
+		printf("\033[0;31m");
 		printf("[%s]", (char *)tmp->content);
 		tmp = tmp->next;
 	}
 	printf("\n");
+	printf("\n\033[0;0m\x1b[1A\x1b[M");
 }
-*/
+
+static void	show_tokens_data(t_token *tokens)
+{
+	t_token	*tmp;
+	
+	tmp = tokens;
+	printf("\033[0;33m");
+	printf("token : \n");
+	while (tmp)
+	{
+		printf("\033[0;33m");
+		printf("[%s]", tmp->data);
+		tmp = tmp->next;
+	}
+	printf("\n");
+	printf("\n\033[0;0m\x1b[1A\x1b[M");
+}
 //use tcsetattr and tcgetattr to modify your terminal settings.
 //clear the ECHOCTL bit flag to suppress output from Ctrl-based signals.
 /*
