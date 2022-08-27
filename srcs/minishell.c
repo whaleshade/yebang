@@ -6,7 +6,7 @@
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 01:24:52 by yeblee            #+#    #+#             */
-/*   Updated: 2022/08/27 00:22:17 by yeblee           ###   ########.fr       */
+/*   Updated: 2022/08/27 23:42:56 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,9 @@ static void	shell_loop()
 	char		*cli_str;
 	char		**line;
 	int			i;
-	t_minishell	sh;
+	t_minishell	*sh;
 	
-	sh.list = ft_calloc(1,sizeof(t_list));
-	sh.root = ft_calloc(1,sizeof(t_node));
-	sh.tokens = ft_calloc(1,sizeof(t_token));
+	sh = ft_calloc(1, sizeof(t_minishell));
 	while (LOOP)
 	{
 		signal(SIGINT, sig_handler); // ctrl + c ... before fork(), set default
@@ -66,15 +64,14 @@ static void	shell_loop()
 			i = 0;
 			while (line[i])
 			{
-				sh.list = get_token_list(line[i]);
+				ft_lstadd_back(&sh->list,  get_token_list(line[i]));
 				// show_list_contents(token_list);
 				/*
-				* 2022.08.26 - 2022.08.07
 				* yeblee - tokenizer(sh, list);
 				* : token_list를 t_token형식에 맞게 적용
 				*   따옴표를 제외한 token_list 화이트 스페이스 제거, type 적용 
 				*/
-				tokenizer(&sh);
+				tokenizer(sh);
 				
 				i++;
 			}

@@ -6,32 +6,42 @@
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 01:52:34 by yeblee            #+#    #+#             */
-/*   Updated: 2022/08/26 04:18:47 by yeblee           ###   ########.fr       */
+/*   Updated: 2022/08/27 23:42:09 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	is_space(char *contents);
+static int	is_space(t_minishell *sh);
 
 void	tokenizer(t_minishell *sh)
 {
-	t_list	*list;
-	// t_token	*buf;
-
-	// buf = sh->tokens;
-	list = sh->list;
-	while (list)
+	while (sh->list)
 	{
-		if (!is_space((char *)list->content))
-			insert_token(sh->tokens, (char *)list->content);
-		list = list->next;
+		if (!is_space(sh))
+			insert_token(&sh->tokens, new_token((char *)sh->list->content));
+		sh->list = sh->list->next;
 	}
-	printf("sh->tokens %s, %d, %p\n", sh->tokens->data, sh->tokens->type, sh->tokens->next);
+	while (sh->tokens)
+	{
+		printf("sh->tokens(%p) : %s\n", sh->tokens, sh->tokens->data);
+		sh->tokens = sh->tokens->next;
+	}
 	printf("\n");
 }
 
-static int	is_space(char *contents)
+/*
+* 공백제거, 마지막 token이 -가 아닐경우에만
+* : ls - al 과 같은 경우 에러처리를 위해서 수정
+*/
+static int	is_space(t_minishell *sh)
 {
-	return (contents[0] == ' ' || contents[0] == '\t' || contents[0] == '\n');
+	char	*contents;
+
+	contents = (char *)sh->list->content;
+	if (sh->tokens && last_token(sh->tokens)->data[0] == '-')
+		return (FALSE);
+	if (contents[0] == ' ' || contents[0] == '\t' || contents[0] == '\n')
+		return (TRUE);
+	return (FALSE);
 }

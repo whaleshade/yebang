@@ -6,7 +6,7 @@
 #    By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/26 01:26:31 by yeblee            #+#    #+#              #
-#    Updated: 2022/08/26 03:47:02 by yeblee           ###   ########.fr        #
+#    Updated: 2022/08/27 00:33:14 by yeblee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ LINE_CLEAR		=	"\x1b[1A\x1b[M"
 NAME			= minishell
 
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror #-g3 -fsanitize=address
+CFLAGS			= -Wall -Wextra -Werror -g3 -fsanitize=address
 RM				= rm -rf
 
 LIB_READ		= -l readline

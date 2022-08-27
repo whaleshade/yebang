@@ -6,7 +6,7 @@
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 02:56:32 by yeblee            #+#    #+#             */
-/*   Updated: 2022/08/26 04:26:16 by yeblee           ###   ########.fr       */
+/*   Updated: 2022/08/27 23:35:43 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,31 @@ t_token	*new_token(char *data)
 	return (new);
 }
 
-void	insert_token(t_token *tokens, char *content)
+void	insert_token(t_token **tokens, t_token *new)
 {
 	t_token	*buf;
-	t_token	*new;
 
-	new = new_token(content);
-	buf = tokens;
+	buf = NULL;
+	if (tokens == NULL || new == NULL)
+		return ;
 	// 첫 번째 
-	if (!tokens)
-		tokens = new;
-	else
+	if (*tokens == NULL)
 	{
-		buf = last_token(buf);
-		buf->next = new;
+		*tokens = new;
+		return ;	
 	}
-	printf("token(%p)\tbuf(%p) : %s, %d, %p\n", tokens, buf, buf->data, buf->type, buf->next);
+	buf = last_token(*tokens);
+	buf->next = new;
 }
 
 t_token	*last_token(t_token *tokens)
 {
 	while (tokens)
+	{
+		if (!tokens->next)
+			break ;
 		tokens = tokens->next;
+	}
 	return (tokens);
 }
 
