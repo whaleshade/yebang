@@ -6,7 +6,7 @@
 #    By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/26 01:26:31 by yeblee            #+#    #+#              #
-#    Updated: 2022/08/27 00:33:14 by yeblee           ###   ########.fr        #
+#    Updated: 2022/08/28 07:32:52 by yeblee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,9 @@ SOURCES			= 				\
 				get_tokens.c	\
 				start_screen.c	\
 				tokenizer.c		\
-				utils_token.c	
+				utils_token.c	\
+				utils_node.c	\
+				parsing.c		
 
 DIR_O			= objs
 SRCS			= $(addprefix $(DIR_S)/,$(SOURCES))

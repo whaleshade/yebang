@@ -6,7 +6,7 @@
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 01:24:52 by yeblee            #+#    #+#             */
-/*   Updated: 2022/08/28 00:35:03 by yeblee           ###   ########.fr       */
+/*   Updated: 2022/08/28 08:31:59 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	shell_loop(void);
 static void	sig_handler(int	signo);
 static void	show_list_contents(t_list *ist);
 static void	show_tokens_data(t_token *tokens);
+static void	show_node_data(t_node *node);
 // static void	ft_nodisplay_ctrlx_set(void);
 // static void	ft_perror(char *str);
 
@@ -66,6 +67,8 @@ static void	shell_loop()
 			{
 				ft_lstadd_back(&sh.list,  get_token_list(line[i]));
 				show_list_contents(sh.list);
+				// ft_lstclear(&sh.list);
+				
 				/*
 				* yeblee - tokenizer(sh, list);
 				* : token_list를 t_token형식에 맞게 적용
@@ -73,6 +76,16 @@ static void	shell_loop()
 				*/
 				tokenizer(&sh);
 				show_tokens_data(sh.tokens);
+				// del_tokens(sh->tokens);
+				
+				/*
+				* 트리 구조에 저장
+				*/
+				sh.root = create_node(sh.tokens);
+				parsing(sh.root);
+				show_node_data(sh.root);
+				
+				// del_node(&sh.root);
 				i++;
 			}
 
@@ -135,6 +148,24 @@ static void	show_tokens_data(t_token *tokens)
 		printf("[%s]", tmp->data);
 		tmp = tmp->next;
 	}
+	printf("\n");
+	printf("\n\033[0;0m\x1b[1A\x1b[M");
+}
+
+static void	show_node_data(t_node *node)
+{
+	t_node	*tmp;
+	t_token	*token;
+	
+	tmp = node;
+	if (!tmp)
+		return ;
+	token = node->tokens;
+	printf("\033[0;36m");
+	printf("node : \n");
+	show_tokens_data(node->tokens);
+	show_node_data(tmp->left);
+	show_node_data(tmp->right);
 	printf("\n");
 	printf("\n\033[0;0m\x1b[1A\x1b[M");
 }

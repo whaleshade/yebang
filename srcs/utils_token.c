@@ -6,7 +6,7 @@
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 02:56:32 by yeblee            #+#    #+#             */
-/*   Updated: 2022/08/27 23:35:43 by yeblee           ###   ########.fr       */
+/*   Updated: 2022/08/28 01:08:16 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,20 @@ t_token	*last_token(t_token *tokens)
 		tokens = tokens->next;
 	}
 	return (tokens);
+}
+
+void	del_token(t_token *tokens)
+{
+	t_token	*del;
+
+	while (tokens)
+	{
+		del = tokens;
+		tokens = tokens->next;
+		free(del->data);
+		free(del->next);
+	}
+	free(tokens);
 }
 
 int	token_type(char *content)

@@ -89,9 +89,20 @@ typedef struct s_minishell
 void	ft_start_screen(void);
 void	rl_replace_line (const char *text, int clear_undo);
 t_list	*get_token_list(char *line);
+
 void	tokenizer(t_minishell *sh);
+
+t_token	*new_token(char *data);
 void	insert_token(t_token **tokens, t_token *new);
 t_token	*last_token(t_token *tokens);
+void	del_token(t_token *tokens);
 int		token_type(char *content);
-t_token	*new_token(char *data);
+
+void	parsing(t_node	*node);
+
+t_node	*create_node(t_token *tokens);
+void	insert_node(t_token *token, t_token *root);
+void	del_node(t_node *node);
+int	node_type(int token_type);
+
 #endif
