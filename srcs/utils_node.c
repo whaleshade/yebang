@@ -14,17 +14,21 @@ t_node	*create_node(t_token *tokens)
 	type = node_type(tokens->type);
 	root->type = type;
 	root->tokens = tokens;
+	// show_node_data(root);
 	return (root);
 }
 
-void	insert_node(t_token *token, t_token *root)
+void	insert_node(t_token **tokens, t_token *root)
 {
-	if (!token || root)
+	t_token	*token;
+
+	if (!tokens || !root)
 		return ;
+	token = *tokens;
 	while (token->next)
 	{
 		if (token->next == root)
-			break;
+			break ;
 		token = token->next;
 	}
 	token->next = NULL;

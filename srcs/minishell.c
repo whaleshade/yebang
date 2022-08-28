@@ -6,7 +6,7 @@
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 01:24:52 by yeblee            #+#    #+#             */
-/*   Updated: 2022/08/28 08:31:59 by yeblee           ###   ########.fr       */
+/*   Updated: 2022/08/28 14:48:45 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void	shell_loop(void);
 static void	sig_handler(int	signo);
 static void	show_list_contents(t_list *ist);
-static void	show_tokens_data(t_token *tokens);
-static void	show_node_data(t_node *node);
+// static void	show_tokens_data(t_token *tokens);
+// static void	show_node_data(t_node *node);
 // static void	ft_nodisplay_ctrlx_set(void);
 // static void	ft_perror(char *str);
 
@@ -83,7 +83,7 @@ static void	shell_loop()
 				*/
 				sh.root = create_node(sh.tokens);
 				parsing(sh.root);
-				show_node_data(sh.root);
+				show_node_data(sh.root, "root");
 				
 				// del_node(&sh.root);
 				i++;
@@ -135,7 +135,7 @@ static void	show_list_contents(t_list *list)
 	printf("\n\033[0;0m\x1b[1A\x1b[M");
 }
 
-static void	show_tokens_data(t_token *tokens)
+void	show_tokens_data(t_token *tokens)
 {
 	t_token	*tmp;
 	
@@ -152,20 +152,18 @@ static void	show_tokens_data(t_token *tokens)
 	printf("\n\033[0;0m\x1b[1A\x1b[M");
 }
 
-static void	show_node_data(t_node *node)
+void	show_node_data(t_node *node, char *str)
 {
 	t_node	*tmp;
-	t_token	*token;
 	
 	tmp = node;
 	if (!tmp)
 		return ;
-	token = node->tokens;
 	printf("\033[0;36m");
-	printf("node : \n");
+	printf("node  - %s :\n", str);
 	show_tokens_data(node->tokens);
-	show_node_data(tmp->left);
-	show_node_data(tmp->right);
+	show_node_data(tmp->left, "left");
+	show_node_data(tmp->right, "right");
 	printf("\n");
 	printf("\n\033[0;0m\x1b[1A\x1b[M");
 }

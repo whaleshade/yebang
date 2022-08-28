@@ -6,7 +6,7 @@
 /*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 02:56:32 by yeblee            #+#    #+#             */
-/*   Updated: 2022/08/28 01:08:16 by yeblee           ###   ########.fr       */
+/*   Updated: 2022/08/28 14:16:50 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ t_token	*last_token(t_token *tokens)
 
 void	del_token(t_token *tokens)
 {
-	t_token	*del;
+	t_token	*tmp;
 
 	while (tokens)
 	{
-		del = tokens;
-		tokens = tokens->next;
-		free(del->data);
-		free(del->next);
+		tmp = tokens->next;
+		free(tokens->data);
+		free(tokens);
+		tokens = tmp;
 	}
 	free(tokens);
 }

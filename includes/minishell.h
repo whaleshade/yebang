@@ -101,8 +101,10 @@ int		token_type(char *content);
 void	parsing(t_node	*node);
 
 t_node	*create_node(t_token *tokens);
-void	insert_node(t_token *token, t_token *root);
+void	insert_node(t_token **token, t_token *root);
 void	del_node(t_node *node);
 int	node_type(int token_type);
 
+void	show_tokens_data(t_token *tokens);
+void	show_node_data(t_node *node, char *str);
 #endif
