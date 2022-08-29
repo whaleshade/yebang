@@ -14,7 +14,11 @@ LINE_CLEAR		=	"\x1b[1A\x1b[M"
 NAME			= minishell
 
 CC				= cc
+<<<<<<< HEAD
 CFLAGS			= -Wall -Wextra -Werror -g -fsanitize=address
+=======
+CFLAGS			= -Wall -Wextra -Werror -g3 -fsanitize=address
+>>>>>>> e497cc73b40e3479e8c60a6d027a27f372840489
 RM				= rm -rf
 
 LIB_READ		= -l readline
@@ -29,6 +33,7 @@ FTPRINT			= ft_printf/libftprintf.a
 HEADERS			= includes
 
 DIR_S 			= srcs
+<<<<<<< HEAD
 SOURCES			= 					\
 				main.c				\
 				check_syntax_error.c\
@@ -40,6 +45,10 @@ SOURCES			= 					\
 				utils_token.c		\
 				utils.c				\
 				welcome_screen.c	
+=======
+SOURCES			= 				\
+				minishell.c		
+>>>>>>> e497cc73b40e3479e8c60a6d027a27f372840489
 
 DIR_O			= objs
 SRCS			= $(addprefix $(DIR_S)/,$(SOURCES))
