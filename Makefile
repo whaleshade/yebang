@@ -6,7 +6,7 @@
 #    By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/26 01:26:31 by yeblee            #+#    #+#              #
-#    Updated: 2022/08/28 07:32:52 by yeblee           ###   ########.fr        #
+#    Updated: 2022/08/29 22:27:11 by yeblee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,13 +42,7 @@ HEADERS			= includes
 
 DIR_S 			= srcs
 SOURCES			= 				\
-				minishell.c		\
-				get_tokens.c	\
-				start_screen.c	\
-				tokenizer.c		\
-				utils_token.c	\
-				utils_node.c	\
-				parsing.c		
+				minishell.c		
 
 DIR_O			= objs
 SRCS			= $(addprefix $(DIR_S)/,$(SOURCES))
