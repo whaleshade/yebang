@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/29 20:06:24 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/29 20:42:48 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	lstadd_token_node(char *token, t_token **token_list, enum e_token type);
 
-void	make_cmd_word_token(char *line, int *i, t_token **token_list)
+void	make_alnum_token(char *line, int *i, t_token **token_list)
 {
 	int		len;
 
 	len = 0;
-	while (line[*i] &&  line[*i] != ' ')
+	while (line[*i] && ft_isalnum(line[*i]))
 	{
 		len++;
 		(*i)++;
@@ -142,7 +142,7 @@ void	make_tokens_list(const char *str, t_token **token_list)
 	i = 0;
 	while (line[i])
 	{
-		make_cmd_word_token(line, &i, token_list);
+		make_alnum_token(line, &i, token_list);
 
 		while (line[i] && !ft_isalnum(line[i]))
 		{
@@ -199,8 +199,12 @@ void	make_tokens_list(const char *str, t_token **token_list)
 				lstadd_token_node(ft_substr(line, i, 2), token_list, DOTDOT);
 				i++;
 			}
-			/* space outside quote to be excluded */
-			else if (line[i] == ' '){}
+			/* space token for error handling */
+			else if (line[i] == ' ')
+			{
+				lstadd_token_node(ft_substr(line, i, 1), token_list, SPACE);
+				i++;
+			}
 			/* else */
 			else
 				lstadd_token_node(ft_substr(line, i, 1), token_list, NONE); //백슬래시, 달러 케이스 추가해줘야 하나?

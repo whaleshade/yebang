@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 15:22:12 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/29 17:51:05 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/29 20:41:57 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ enum	e_token
 	HERE_DOC,
 	PARENS,
 	DOT,
-	DOTDOT
+	DOTDOT,
+	SPACE
 };
 
 enum	e_type
