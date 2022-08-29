@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/29 15:22:12 by jibang            #+#    #+#             */
+/*   Updated: 2022/08/29 22:31:18 by yeblee           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -9,15 +21,32 @@
 # include <signal.h>
 # include <termios.h>
 # include <fcntl.h>
+
 # include <readline/readline.h>
 # include <readline/history.h>
+
+typedef struct s_global
+{
+	int		status;
+	char	**env;
+} t_global;
 
 # include "../lib/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
 # include "../lib/get_next_line/get_next_line.h"
 
-# define TRUE	1
-# define FALSE	0
+# define LOOP 1
+
+# define ON 1
+# define OFF 0
+
+# define SUCCESS 0
+# define ERROR -1
+
+# define TRUE 1
+# define FALSE 0
+
+void	rl_replace_line (const char *text, int clear_undo);
 
 enum	e_token
 {
@@ -26,6 +55,8 @@ enum	e_token
 	AND,
 	PIPE,
 	CMD,
+	CMD_OPT,
+	DOLLAR_EXP,
 	S_QUOTE,
 	D_QUOTE,
 	STR,
@@ -33,8 +64,10 @@ enum	e_token
 	OUT_RD,
 	APP_RD,
 	HERE_DOC,
-	L_PARENS,
-	R_PARENS
+	PARENS,
+	DOT,
+	DOTDOT,
+	SPACE
 };
 
 enum	e_type
@@ -69,47 +102,10 @@ typedef struct s_minishell
 	t_token		*tokens;
 }				t_minishell;
 
-typedef struct s_global
-{
-	int		status;
-	char	**env;
-}				t_global;
-
-void	rl_replace_line (const char *text, int clear_undo);
-
-/*	welcome_screen.c	*/
-void	welcome_screen(void);
-
-/*	utils_parsing.c	*/
-t_token	*is_and_or_pipe(t_token	*tokens);
-void	set_node_type(t_node *node, t_token *token);
-/*	parsing.c	*/
-void	split_line(const char *str, t_minishell *sh);
-
-/*	signal_handler.c	*/
-void	set_signal(void);
-
-/*	make_token	*/
-int	make_token(t_token *tokens, char *line);
-
-/*	utils_syntax_error.c	*/
-int		check_token_type(t_token *tokens, char *line, int *i);
-int		check_type_double(t_token *tokens, char *line, int *i, int type);
-int		is_quote(char c, int flag);
-
-/*	utils_token.c	*/
-t_token	*new_token(char *data, int type);
-void	add_token(t_token *tokens, t_token *new);
-t_token	*last_token(t_token	*tokens);
-void	del_token(t_token *tokens);
-
-/*	utils_node.c	*/
-t_node	*create_node(t_token *tokens);
-void	insert_node(t_token *token, t_token *root);
-void	del_node(t_node *node);
-
-/*	utils.c	*/
-void	ft_perror(char *str);
-int		whitespace(char *line);
+/* token_lst_func.c */
+t_token	*token_lstlast(t_token *lst);
+void	token_lstadd_back(t_token **lst, t_token *new);
+t_token	*token_lstnew(void *data, enum e_token type);
 
 #endif
+
