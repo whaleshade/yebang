@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/29 21:28:21 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/29 21:33:50 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	make_d_quote_token(char *line, int *i, t_token **token_list)
 	}
 	if (line[*i] == '\"')
 	{
-		// quote_on = TRUE;
 		len++;
 		(*i)++;
 	}
@@ -223,10 +222,7 @@ void	make_tokens_list(const char *str, t_token **token_list)
 			}
 			/* space token for error handling */
 			else if (line[i] == ' ')
-			{
 				lstadd_token_node(ft_substr(line, i, 1), token_list, SPACE);
-				i++;
-			}
 			/* else */
 			else
 				lstadd_token_node(ft_substr(line, i, 1), token_list, NONE);
