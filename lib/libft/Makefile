@@ -1,11 +1,8 @@
+NAME	= libft.a
 
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 RM		= rm -f
-
-NAME	= libft.a
-D_FTP	= ./ft_printf/
-D_GNL	= ./get_next_line/
 
 SRCS	=					\
 		ft_isalpha.c	 	\
@@ -51,15 +48,6 @@ SRCS	=					\
 		ft_lstclear.c		\
 		ft_lstiter.c		\
 		ft_lstmap.c			\
-		ft_printf.c			\
-		get_next_line.c		\
-		$(D_FTP)ft_print_mem_address_len.c	\
-		$(D_FTP)ft_putchar_len.c 			\
-		$(D_FTP)ft_putnbr_len.c 			\
-		$(D_FTP)ft_putstr_len.c 			\
-		$(D_FTP)ft_putnbr_base_len.c 		\
-		$(D_FTP)ft_putnbr_unsign.c 			\
-		$(D_GNL)get_next_line_utils.c 		\
 
 OBJS	= $(SRCS:.c=.o)
 

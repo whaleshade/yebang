@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 15:22:12 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/29 20:41:57 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/29 22:31:18 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ typedef struct s_global
 	char	**env;
 } t_global;
 
-# include "../libft/libft.h"
+# include "../lib/libft/libft.h"
+# include "../lib/ft_printf/ft_printf.h"
+# include "../lib/get_next_line/get_next_line.h"
 
 # define LOOP 1
 
@@ -44,7 +46,6 @@ typedef struct s_global
 # define TRUE 1
 # define FALSE 0
 
-/* for error fix */
 void	rl_replace_line (const char *text, int clear_undo);
 
 enum	e_token
