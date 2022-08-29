@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/29 15:22:05 by jibang            #+#    #+#             */
+/*   Updated: 2022/08/29 15:22:07 by jibang           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 /* to be organized */
-#include "start_screen.c"
+#include "welcome_screen.c"
 #include "get_tokens.c"
+#include "token_lst_func.c"
 
 void	ft_perror(char *str)
 {
@@ -34,17 +47,21 @@ void	sig_handler(int	signo)
 	return ;
 }
 
-void	show_list_contents(t_list *list)
+void	show_tokens_data(t_token *tokens)
 {
-	t_list	*tmp;
+	t_token	*tmp;
 
-	tmp = list;
+	tmp = tokens;
+	printf("\033[0;33m");
+	printf("token : \n");
 	while (tmp)
 	{
-		printf("[%s]", (char *)tmp->content);
+		printf("\033[0;33m");
+		printf("[%s]", tmp->data);
 		tmp = tmp->next;
 	}
 	printf("\n");
+	printf("\n\033[0;0m\x1b[1A\x1b[M");
 }
 
 void	shell_loop()
@@ -52,7 +69,7 @@ void	shell_loop()
 	char	*cli_str;
 	char	**line;
 	int		i;
-	t_list	*token_list;
+	t_token	*token_list;
 
 	while (LOOP)
 	{
@@ -67,7 +84,8 @@ void	shell_loop()
 			while (line[i])
 			{
 				token_list = get_token_list(line[i]);
-				show_list_contents(token_list);
+				// show_list_contents(token_list);
+				show_tokens_data(token_list);
 				i++;
 			}
 
@@ -93,7 +111,7 @@ t_global	g_var;
 int	main(int ac, char **av, char **envp)
 {
 	/* START SCREEN */
-	ft_start_screen();
+	welcome_screen();
 
 	/* READ ENV */
 	(void)ac;

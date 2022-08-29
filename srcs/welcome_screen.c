@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-void	ft_start_screen(void)
+void	welcome_screen(void)
 {
 	int		i;
 	int		fd;
