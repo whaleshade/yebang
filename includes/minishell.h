@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/29 15:22:12 by jibang            #+#    #+#             */
+/*   Updated: 2022/08/29 17:51:05 by jibang           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -29,6 +41,9 @@ typedef struct s_global
 # define SUCCESS 0
 # define ERROR -1
 
+# define TRUE 1
+# define FALSE 0
+
 /* for error fix */
 void	rl_replace_line (const char *text, int clear_undo);
 
@@ -40,6 +55,7 @@ enum	e_token
 	PIPE,
 	CMD,
 	CMD_OPT,
+	DOLLAR_EXP,
 	S_QUOTE,
 	D_QUOTE,
 	STR,
@@ -48,8 +64,8 @@ enum	e_token
 	APP_RD,
 	HERE_DOC,
 	PARENS,
-	L_PAREN,
-	R_PAREN
+	DOT,
+	DOTDOT
 };
 
 enum	e_type
@@ -90,3 +106,4 @@ void	token_lstadd_back(t_token **lst, t_token *new);
 t_token	*token_lstnew(void *data, enum e_token type);
 
 #endif
+

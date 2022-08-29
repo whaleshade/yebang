@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/27 01:55:46 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/29 20:06:24 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	lstadd_token_node(char *token, t_token **token_list, enum e_token type);
 
-void	make_alnum_token(char *line, int *i, t_token **token_list)
+void	make_cmd_word_token(char *line, int *i, t_token **token_list)
 {
 	int		len;
 
 	len = 0;
-	while (line[*i] && ft_isalnum(line[*i]))
+	while (line[*i] &&  line[*i] != ' ')
 	{
 		len++;
 		(*i)++;
@@ -118,6 +118,21 @@ void	make_cmd_option_token(char *line, int *i, t_token **token_list)
 	(*i)--;
 }
 
+void	make_expansion_token(char *line, int *i, t_token **token_list)
+{
+	int		len;
+
+	(*i)++;
+	len = 0;
+	while (line[*i] && (ft_isalnum(line[*i]) || line[*i] == '?'))
+	{
+		len++;
+		(*i)++;
+	}
+	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list, DOLLAR_EXP);
+	(*i)--;
+}
+
 void	make_tokens_list(const char *str, t_token **token_list)
 {
 	char	*line;
@@ -127,7 +142,7 @@ void	make_tokens_list(const char *str, t_token **token_list)
 	i = 0;
 	while (line[i])
 	{
-		make_alnum_token(line, &i, token_list);
+		make_cmd_word_token(line, &i, token_list);
 
 		while (line[i] && !ft_isalnum(line[i]))
 		{
@@ -150,8 +165,10 @@ void	make_tokens_list(const char *str, t_token **token_list)
 			/* option case */
 			else if (line[i] == '-')
 				make_cmd_option_token(line, &i, token_list);
+			else if (line[i] == '$')
+				make_expansion_token(line, &i, token_list);
 			/* & case */
-			else if (line[i] == '&' && line[i + 1] != '&') // -> 예외처리!
+			else if (line[i] == '&' && line[i + 1] != '&')
 				lstadd_token_node(ft_substr(line, i, 1), token_list, NONE);
 			else if (line[i] == '&' && line[i + 1] == '&')
 			{
@@ -172,6 +189,14 @@ void	make_tokens_list(const char *str, t_token **token_list)
 			else if (line[i] == '>' && line[i + 1] == '>')
 			{
 				lstadd_token_node(ft_substr(line, i, 2), token_list, APP_RD);
+				i++;
+			}
+			/* dot case */
+			else if (line[i] == '.' && line[i + 1] != '.')
+				lstadd_token_node(ft_substr(line, i, 1), token_list, DOT);
+			else if (line[i] == '.' && line[i + 1] == '.')
+			{
+				lstadd_token_node(ft_substr(line, i, 2), token_list, DOTDOT);
 				i++;
 			}
 			/* space outside quote to be excluded */
