@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/29 20:42:48 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/29 21:28:21 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,38 @@ void	make_alnum_token(char *line, int *i, t_token **token_list)
 		lstadd_token_node(ft_substr(line, *i - len, len), token_list, CMD);
 }
 
+
 void	make_d_quote_token(char *line, int *i, t_token **token_list)
 {
 	int		len;
+	int		escape_on;
 
+	escape_on = FALSE;
 	(*i)++;
 	len = 0;
 	while (line[*i] && line[*i] != '\"')
 	{
-		len++;
-		(*i)++;
-		if (line[*i - 1] == '\\' && line[*i] == '\"')
+		if (line[*i] == '\\')
+		{
+			escape_on = TRUE;
+			len++;
+			(*i)++;
+			if (line[*i] == '\\')
+			{
+				escape_on = FALSE;
+			}
+		}
+		if (line[*i] == '\"')
+		{
+			if (escape_on)
+			{
+				len++;
+				(*i)++;
+			}
+			else
+				break ;
+		}
+		if (!escape_on)
 		{
 			len++;
 			(*i)++;
@@ -46,6 +67,7 @@ void	make_d_quote_token(char *line, int *i, t_token **token_list)
 	}
 	if (line[*i] == '\"')
 	{
+		// quote_on = TRUE;
 		len++;
 		(*i)++;
 	}
@@ -207,7 +229,7 @@ void	make_tokens_list(const char *str, t_token **token_list)
 			}
 			/* else */
 			else
-				lstadd_token_node(ft_substr(line, i, 1), token_list, NONE); //백슬래시, 달러 케이스 추가해줘야 하나?
+				lstadd_token_node(ft_substr(line, i, 1), token_list, NONE);
 			i++;
 		}
 	}
