@@ -35,18 +35,21 @@ void	sig_handler(int	signo)
 	return ;
 }
 
-void	show_list_contents(t_token *list)
+void	show_tokens_data(t_token *tokens)
 {
 	t_token	*tmp;
 
-	tmp = list;
+	tmp = tokens;
+	printf("\033[0;33m");
+	printf("token : \n");
 	while (tmp)
 	{
-		// printf("[%s {type : %d}]", (char *)tmp->data, (int)tmp->type);
-		printf("[%s]", (char *)tmp->data);
+		printf("\033[0;33m");
+		printf("[%s]", tmp->data);
 		tmp = tmp->next;
 	}
 	printf("\n");
+	printf("\n\033[0;0m\x1b[1A\x1b[M");
 }
 
 void	shell_loop()
@@ -69,7 +72,8 @@ void	shell_loop()
 			while (line[i])
 			{
 				token_list = get_token_list(line[i]);
-				show_list_contents(token_list);
+				// show_list_contents(token_list);
+				show_tokens_data(token_list);
 				i++;
 			}
 
