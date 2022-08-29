@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/29 15:22:05 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/29 22:22:49 by yeblee           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 /* to be organized */
@@ -70,7 +58,6 @@ void	shell_loop()
 	char	**line;
 	int		i;
 	t_minishell	sh;
-	// t_token	*token_list;
 
 	while (LOOP)
 	{
@@ -85,8 +72,7 @@ void	shell_loop()
 			while (line[i])
 			{
 				sh.tokens = get_token_list(line[i]);
-				// show_list_contents(sh.tokens);
-				show_tokens_data(sh.tokens);
+				show_list_contents(sh.tokens);
 				/*
 				* 트리 구조에 저장
 				*/

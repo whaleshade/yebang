@@ -1,3 +1,4 @@
+
 #include "../includes/minishell.h"
 
 t_node	*create_node(t_token *tokens)
@@ -17,6 +18,7 @@ t_node	*create_node(t_token *tokens)
 	// show_node_data(root);
 	return (root);
 }
+
 
 void	insert_node(t_token **tokens, t_token *root)
 {
@@ -67,6 +69,7 @@ int	node_type(int token_type)
 }
 
 static t_token	*is_and_or_pipe(t_token	*tokens);
+static t_token	*pass_parens(t_token *tokens);
 
 void	parsing(t_node	*node)
 {
@@ -84,13 +87,13 @@ void	parsing(t_node	*node)
 
 			left_token = node->tokens;
 			node->left = create_node(left_token);
-			
+
 			right_token = root->next;
 			node->right = create_node(right_token);
-			
+
 			root->next = NULL;
 			node->tokens = root;
-			
+
 			parsing(node->left);
 			parsing(node->right);
 		}
@@ -110,8 +113,22 @@ static t_token	*is_and_or_pipe(t_token	*tokens)
 		if (buf->type == PIPE)
 			return (buf);
 		// if (buf->type == PARENS)
-		// 	continue ;
+		// 	buf = pass_parens(buf);
 		buf = buf->next;
 	}
 	return (NULL);
 }
+
+// static t_token	*pass_parens(t_token *tokens)
+// {
+// 	t_token	*buf;
+
+// 	buf = tokens;
+// 	while (buf)
+// 	{
+// 		if (buf->type != PARENS)
+// 			break ;
+// 		buf = buf->next;
+// 	}
+// 	return (buf);
+// }
