@@ -21,44 +21,59 @@ void	make_d_quote_token(char *line, int *i, t_token **token_list)
 {
 	int		len;
 	int		escape_on;
+	int		line_len;
 
-	escape_on = FALSE;
+	line_len = ft_strlen(line);
 	(*i)++;
 	len = 0;
-	while (line[*i] && line[*i] != '\"')
+	escape_on = FALSE;
+	while (line[*i] && *i < line_len)
 	{
+
 		if (line[*i] == '\\')
 		{
-			escape_on = TRUE;
-			len++;
-			(*i)++;
-			if (line[*i] == '\\')
+			if (line[*i - 1] != '\\' && escape_on == FALSE)
+			{
+				escape_on = TRUE;
+				len++;
+				(*i)++;
+			}
+			else if (line[*i - 1] == '\\' && escape_on == TRUE)
 			{
 				escape_on = FALSE;
 				len++;
 				(*i)++;
 			}
+			else if (line[*i - 1] == '\\' && escape_on == FALSE)
+			{
+				len++;
+				(*i)++;
+			}
 		}
-		if (line[*i] == '\"')
+		else if (line[*i] != '\\' && line[*i] != '\"' && escape_on == TRUE)
 		{
-			if (escape_on)
+			escape_on = FALSE;
+			len++;
+			(*i)++;
+		}
+		else if (line[*i] == '\"')
+		{
+			if (line[*i - 1] == '\\' && escape_on == TRUE)
 			{
 				len++;
 				(*i)++;
 			}
 			else
+			{
+				len++;
+				(*i)++;
 				break ;
+			}
 		}
-		if (!escape_on)
-		{
-			len++;
+		else
+		{	len++;
 			(*i)++;
 		}
-	}
-	if (line[*i] == '\"')
-	{
-		len++;
-		(*i)++;
 	}
 	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list, D_QUOTE);
 	(*i)--;
