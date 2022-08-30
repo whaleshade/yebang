@@ -3,4 +3,5 @@
 *.out
 *.zip
 *.o
+*.a
 tester

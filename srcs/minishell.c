@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 15:22:05 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/29 15:22:07 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/30 21:10:49 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,41 +66,31 @@ void	show_tokens_data(t_token *tokens)
 
 void	shell_loop()
 {
-	char	*cli_str;
-	char	**line;
-	int		i;
+	char	*cmd_line;
 	t_token	*token_list;
 
 	while (LOOP)
 	{
 		signal(SIGINT, sig_handler); // ctrl + c ... before fork(), set default
 		signal(SIGQUIT, SIG_IGN); // ctrl +'\'
-		cli_str = readline("minsh$ ");
-		if (cli_str)
+		cmd_line = readline("minsh$ ");
+		if (cmd_line)
 		{
-			//if 끝에 백슬래시
-			line = ft_split(cli_str, ';');
-			i = 0;
-			while (line[i])
-			{
-				token_list = get_token_list(line[i]);
-				// show_list_contents(token_list);
-				show_tokens_data(token_list);
-				i++;
-			}
-
-			add_history(cli_str); //shows the history of lines, by pressing arrows
-			free(cli_str);
+			token_list = get_token_list(cmd_line);
+			// show_list_contents(token_list);
+			show_tokens_data(token_list);
+			add_history(cmd_line); //shows the history of lines, by pressing arrows
+			free(cmd_line);
 			//free(token_list);
 			//free(line);
-			cli_str = NULL;
-		} //line[0] = '\0'일 경우도 처리 해줘야 하나?
+			cmd_line = NULL;
+		} // line[0] = '\0'일 경우도 처리 해줘야 하나?
 		else
 		{
 			printf("\033[1A");
 			printf("\033[7C");
 			printf("exit\n");
-			free(line);
+			free(cmd_line);
 			exit(1);
 		}
 	}

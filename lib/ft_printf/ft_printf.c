@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 15:35:59 by jibang            #+#    #+#             */
-/*   Updated: 2022/06/04 20:58:15 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/18 23:39:21 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./ft_printf/ft_printf.h"
-#include "libft.h"
+#include "ft_printf.h"
+#include "../libft/libft.h"
 
 void	ft_flag(va_list ap, char flag, int *len)
 {
