@@ -9,8 +9,7 @@ void	welcome_screen(void)
 
 	i = 0;
 	color = 31;
-	fd = open("yebang_shell.txt", O_RDONLY);
-	// fd = open("vaccine_shell.txt", O_RDONLY);
+	fd = open("welcome.txt", O_RDONLY);
 	while (1)
 	{
 		line = get_next_line(fd);

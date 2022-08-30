@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/29 15:22:05 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/29 15:22:07 by jibang           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 /* to be organized */
@@ -69,7 +57,7 @@ void	shell_loop()
 	char	*cli_str;
 	char	**line;
 	int		i;
-	t_token	*token_list;
+	t_minishell	sh;
 
 	while (LOOP)
 	{
@@ -83,9 +71,15 @@ void	shell_loop()
 			i = 0;
 			while (line[i])
 			{
-				token_list = get_token_list(line[i]);
-				// show_list_contents(token_list);
-				show_tokens_data(token_list);
+				sh.tokens = get_token_list(line[i]);
+				show_list_contents(sh.tokens);
+				/*
+				* 트리 구조에 저장
+				*/
+				sh.root = create_node(sh.tokens);
+				parsing(sh.root);
+				show_node_data(sh.root, "root");
+				// del_node(&sh.root);
 				i++;
 			}
 

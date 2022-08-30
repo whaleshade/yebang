@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 14:53:41 by jibang            #+#    #+#             */
-/*   Updated: 2022/06/04 20:47:31 by jibang           ###   ########.fr       */
+/*   Created: 2022/05/19 12:09:02 by yeblee            #+#    #+#             */
+/*   Updated: 2022/05/23 17:06:42 by yeblee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,22 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+
 # define BUFFER_SIZE 10
 
-size_t	ft_strlen_gnl(char *s);
-void	ft_joinlcpy_gnl(char *join, char *s, size_t size);
-int		is_newline(char *save);
-char	*ft_strjoin_gnl(char *save, char *buff);
-char	*get_remains(char *save);
-char	*get_one_line(char *save);
-char	*read_newline(int fd, char *save);
+typedef struct s_gnl_list
+{
+	int					fd;
+	char				*contents;
+	struct s_gnl_list	*prev;
+	struct s_gnl_list	*next;
+}	t_gnl_list;
+
+size_t	gnl_strlen(char const *s);
+char	*gnl_clear_node(t_gnl_list *node);
+char	*gnl_strchr(char const *s, int c);
+char	*gnl_append_buff(char const *save, char const *buf);
+size_t	gnl_strlcpy(char *dst, char const *src, size_t dstsize);
 char	*get_next_line(int fd);
 
 #endif
