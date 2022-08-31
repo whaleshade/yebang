@@ -6,7 +6,7 @@
 /*   By: jibang <jibang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 13:39:55 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/30 10:17:09 by jibang           ###   ########.fr       */
+/*   Updated: 2022/08/31 19:20:47 by jibang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,62 +32,20 @@ void	make_alnum_token(char *line, int *i, t_token **token_list)
 void	make_d_quote_token(char *line, int *i, t_token **token_list)
 {
 	int		len;
-	int		escape_on;
-	int		line_len;
 
-	line_len = ft_strlen(line);
 	(*i)++;
 	len = 0;
-	escape_on = FALSE;
-	while (line[*i] && *i < line_len)
+	while (line[*i] && line[*i] != '\"')
 	{
-
-		if (line[*i] == '\\')
-		{
-			if (line[*i - 1] != '\\' && escape_on == FALSE)
-			{
-				escape_on = TRUE;
-				len++;
-				(*i)++;
-			}
-			else if (line[*i - 1] == '\\' && escape_on == TRUE)
-			{
-				escape_on = FALSE;
-				len++;
-				(*i)++;
-			}
-			else if (line[*i - 1] == '\\' && escape_on == FALSE)
-			{
-				len++;
-				(*i)++;
-			}
-		}
-		else if (line[*i] != '\\' && line[*i] != '\"' && escape_on == TRUE)
-		{
-			escape_on = FALSE;
-			len++;
-			(*i)++;
-		}
-		else if (line[*i] == '\"')
-		{
-			if (line[*i - 1] == '\\' && escape_on == TRUE)
-			{
-				len++;
-				(*i)++;
-			}
-			else
-			{
-				len++;
-				(*i)++;
-				break ;
-			}
-		}
-		else
-		{	len++;
-			(*i)++;
-		}
+		len++;
+		(*i)++;
 	}
-	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list, D_QUOTE);
+	if (line[*i] == '\"')
+	{
+		len++;
+		(*i)++;
+	}
+	lstadd_token_node(ft_substr(line, *i - len - 1, len + 1), token_list, S_QUOTE);
 	(*i)--;
 }
 
