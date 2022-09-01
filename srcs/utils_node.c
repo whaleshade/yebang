@@ -59,59 +59,9 @@ int	node_type(int token_type)
 		node_type = TK_PIPE;
 	else if (token_type == HERE_DOC || token_type == APP_RD || token_type == INP_RD || token_type == OUT_RD)
 		node_type = TK_REDIR;
-	else if (token_type == PARENS)
+	else if (token_type == PARENS) //|| token_type == R_PARENS)
 		node_type = TK_PARENS;
 	else if (token_type == STR || token_type == CMD)
 		node_type = TK_WORD;
 	return (node_type);
-}
-
-static t_token	*is_and_or_pipe(t_token	*tokens);
-
-void	parsing(t_node	*node)
-{
-	t_token	*left_token;
-	t_token	*right_token;
-	t_token	*root;
-
-	if (node)
-	{
-		root = is_and_or_pipe(node->tokens);
-		if (root && (root->type == TK_AND || root->type == TK_OR || root->type == TK_PIPE))
-		{
-			// printf("parsing : root [%d] - %s\n",root->type, root->data);
-			insert_node(&node->tokens, root);
-
-			left_token = node->tokens;
-			node->left = create_node(left_token);
-			
-			right_token = root->next;
-			node->right = create_node(right_token);
-			
-			root->next = NULL;
-			node->tokens = root;
-			
-			parsing(node->left);
-			parsing(node->right);
-		}
-		// redirect, parenthesis, world(cmd & str)
-	}
-}
-
-static t_token	*is_and_or_pipe(t_token	*tokens)
-{
-	t_token	*buf;
-
-	buf = tokens;
-	while (buf)
-	{
-		if (buf->type == AND || buf->type == OR)
-			return (buf);
-		if (buf->type == PIPE)
-			return (buf);
-		// if (buf->type == PARENS)
-		// 	continue ;
-		buf = buf->next;
-	}
-	return (NULL);
 }

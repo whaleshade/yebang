@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/29 15:22:12 by jibang            #+#    #+#             */
-/*   Updated: 2022/08/29 22:31:18 by yeblee           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -25,12 +13,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct s_global
-{
-	int		status;
-	char	**env;
-} t_global;
-
 # include "../lib/libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
 # include "../lib/get_next_line/get_next_line.h"
@@ -43,10 +25,9 @@ typedef struct s_global
 # define SUCCESS 0
 # define ERROR -1
 
-# define TRUE 1
-# define FALSE 0
-
-void	rl_replace_line (const char *text, int clear_undo);
+/* 2022.08.26 (yeblee) 추가 */
+# define TRUE	1
+# define FALSE	0
 
 enum	e_token
 {
@@ -55,8 +36,6 @@ enum	e_token
 	AND,
 	PIPE,
 	CMD,
-	CMD_OPT,
-	DOLLAR_EXP,
 	S_QUOTE,
 	D_QUOTE,
 	STR,
@@ -64,10 +43,7 @@ enum	e_token
 	OUT_RD,
 	APP_RD,
 	HERE_DOC,
-	PARENS,
-	DOT,
-	DOTDOT,
-	SPACE
+	PARENS
 };
 
 enum	e_type
@@ -79,6 +55,13 @@ enum	e_type
 	TK_REDIR,
 	TK_PARENS
 };
+
+// 전역 변수로 사용할 구조체
+typedef struct s_global
+{
+	int		status;
+	char	**env;
+} t_global;
 
 // token : 가장 작은 단위로 나눔
 typedef struct s_token
@@ -100,12 +83,28 @@ typedef struct s_minishell
 {
 	t_node		*root;
 	t_token		*tokens;
+	t_list		*list;
 }				t_minishell;
 
-/* token_lst_func.c */
-t_token	*token_lstlast(t_token *lst);
-void	token_lstadd_back(t_token **lst, t_token *new);
-t_token	*token_lstnew(void *data, enum e_token type);
+void	ft_start_screen(void);
+void	rl_replace_line (const char *text, int clear_undo);
+t_list	*get_token_list(char *line);
 
+void	tokenizer(t_minishell *sh);
+
+t_token	*new_token(char *data);
+void	insert_token(t_token **tokens, t_token *new);
+t_token	*last_token(t_token *tokens);
+void	del_token(t_token *tokens);
+int		token_type(char *content);
+
+void	parsing(t_node	*node);
+
+t_node	*create_node(t_token *tokens);
+void	insert_node(t_token **token, t_token *root);
+void	del_node(t_node *node);
+int	node_type(int token_type);
+
+void	show_tokens_data(t_token *tokens);
+void	show_node_data(t_node *node, char *str);
 #endif
-
