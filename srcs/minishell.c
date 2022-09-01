@@ -38,7 +38,7 @@ static void	shell_loop()
 {
 	char		*cli_str;
 	t_minishell	sh;
-	
+
 	while (LOOP)
 	{
 		signal(SIGINT, sig_handler); // ctrl + c ... before fork(), set default
@@ -49,24 +49,24 @@ static void	shell_loop()
 				ft_lstadd_back(&sh.list,  get_token_list(cli_str));
 				show_list_contents(sh.list);
 				// ft_lstclear(&sh.list);
-				
+
 				/*
 				* yeblee - tokenizer(sh, list);
 				* : token_list를 t_token형식에 맞게 적용
-				*   따옴표를 제외한 token_list 화이트 스페이스 제거, type 적용 
+				*   따옴표를 제외한 token_list 화이트 스페이스 제거, type 적용
 				*/
 				tokenizer(&sh);
 				show_tokens_data(sh.tokens);
 				// del_tokens(sh->tokens);
-				
+
 				/*
 				* 트리 구조에 저장
 				*/
 				sh.root = create_node(sh.tokens);
 				parsing(sh.root);
-				
+
 				show_node_data(sh.root, "root");
-				
+
 				// del_node(&sh.root);
 
 			add_history(cli_str); //shows the history of lines, by pressing arrows
@@ -102,6 +102,8 @@ static void	show_list_contents(t_list *list)
 {
 	t_list	*tmp;
 
+	if (!list)
+		return ;
 	tmp = list;
 	printf("\033[0;31m");
 	printf("list : \n");
@@ -118,7 +120,9 @@ static void	show_list_contents(t_list *list)
 void	show_tokens_data(t_token *tokens)
 {
 	t_token	*tmp;
-	
+
+	if (!tokens)
+		return ;
 	tmp = tokens;
 	printf("\033[0;33m");
 	printf("token : \n");
@@ -135,7 +139,9 @@ void	show_tokens_data(t_token *tokens)
 void	show_node_data(t_node *node, char *str)
 {
 	t_node	*tmp;
-	
+
+	if (!node)
+		return ;
 	tmp = node;
 	if (!tmp)
 		return ;

@@ -5,6 +5,9 @@ t_node	*create_node(t_token *tokens)
 	int		type;
 	t_node	*root;
 
+	root = NULL;
+	if (tokens == NULL)
+		return (NULL);
 	root = ft_calloc(1, sizeof(t_node));
 	if (!root)
 	{
@@ -22,6 +25,7 @@ void	insert_node(t_token **tokens, t_token *root)
 {
 	t_token	*token;
 
+	token = NULL;
 	if (!tokens || !root)
 		return ;
 	token = *tokens;
@@ -36,6 +40,8 @@ void	insert_node(t_token **tokens, t_token *root)
 
 void	del_node(t_node *node)
 {
+	if (!node)
+		return ;
 	if (node)
 	{
 		del_node(node->left);
