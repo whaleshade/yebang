@@ -3,13 +3,29 @@
 static t_token	*is_and_or_pipe(t_token	*tokens);
 // static t_token	*pass_parens(t_token *tokens);
 
+// int	tokens_counter(t_token *tokens)
+// {
+// 	int		cnt;
+
+// 	cnt	= 0;
+// 	if (tokens == NULL)
+// 		return (0);
+// 	while (tokens != NULL)
+// 	{
+// 		cnt++;
+// 		tokens = tokens->next;
+// 	}
+// 	return (cnt);
+// }
+
+
 void	parsing(t_node	*node)
 {
 	t_token	*left_token;
 	t_token	*right_token;
 	t_token	*root;
 
-	if (!node)
+	if (node == NULL)
 		return ;
 	left_token = NULL;
 	right_token = NULL;
@@ -17,21 +33,30 @@ void	parsing(t_node	*node)
 	if (node)
 	{
 		root = is_and_or_pipe(node->tokens);
+		if (!root)
+			return ;
 		if (root && (root->type == AND || root->type == OR || root->type == PIPE))
 		{
 			// printf("parsing : root [%d] - %s\n",root->type, root->data);
 			insert_node(&node->tokens, root);
 
 			left_token = node->tokens;
+			if (left_token == root)
+			{
+				right_token = root->next;
+				node->right = create_node(right_token);
+				root->next = NULL;
+				node->tokens = root;
+				parsing(node->right);
+				return ;
+			}
 			node->left = create_node(left_token);
-
 			right_token = root->next;
 			node->right = create_node(right_token);
 
 			root->next = NULL;
 			node->tokens = root;
-			if (node->left == NULL || node->right == NULL)
-				return ;
+
 			parsing(node->left);
 			parsing(node->right);
 		}

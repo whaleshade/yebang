@@ -150,7 +150,7 @@ void	show_node_data(t_node *node, char *str)
 	show_tokens_data(node->tokens);
 	show_node_data(tmp->left, "left");
 	show_node_data(tmp->right, "right");
-	printf("\n");
+	// printf("\n");
 	printf("\n\033[0;0m\x1b[1A\x1b[M");
 }
 //use tcsetattr and tcgetattr to modify your terminal settings.

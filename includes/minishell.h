@@ -43,7 +43,7 @@ enum	e_token
 	OUT_RD,
 	APP_RD,
 	HERE_DOC,
-	PARENS
+	PARENS,
 };
 
 enum	e_type
