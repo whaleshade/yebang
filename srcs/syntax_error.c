@@ -1,7 +1,8 @@
 #include "../includes/minishell.h"
 
 static int	is_forbidden_char(char *c);
-static int	is_invalid_opt_syntax(t_list *node);
+static int	is_invalid_opt_syntax(t_list *list);
+static int	is_paired_parens(char *str);
 
 //syntax error 리턴값별로 perror 문구 다르게
 int	syntax_error(t_list *list)
@@ -10,7 +11,13 @@ int	syntax_error(t_list *list)
 	{
 		if (is_forbidden_char((char *)list->content))
 			return (ERROR);
+		if (ft_strncmp(list->content, "&", 2) == 0)
+			return (ERROR);
+		if (ft_strncmp(list->content, ")", 2) == 0)
+			return (ERROR);
 		if (is_invalid_opt_syntax(list))
+			return (ERROR);
+		if (ft_strncmp(list->content, "(", 1) == 0 && is_paired_parens(list->content) == FALSE)
 			return (ERROR);
 		list = list->next;
 	}
@@ -52,4 +59,24 @@ static int	is_invalid_opt_syntax(t_list *list)
 		list = list->next;
 	}
 	return (result);
+}
+
+static int	is_paired_parens(char *str)
+{
+	int		i;
+	int		par_cnt;
+
+	par_cnt = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '(')
+			par_cnt++;
+		if (str[i] == ')')
+			par_cnt--;
+		i++;
+	}
+	if (par_cnt != 0)
+		return (FALSE);
+	return (TRUE);
 }
