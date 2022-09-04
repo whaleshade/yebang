@@ -55,26 +55,36 @@ static void	shell_loop()
 				* : token_list를 t_token형식에 맞게 적용
 				*   따옴표를 제외한 token_list 화이트 스페이스 제거, type 적용
 				*/
-				tokenizer(&sh);
-				show_tokens_data(sh.tokens);
-				// del_tokens(sh->tokens);
+				if (tokenizer(&sh) == ERROR)
+				{
+					add_history(cli_str); // shows the history of lines, by pressing arrows
+					free(cli_str);
+					// free(token_list);
+					// free(line);
+					cli_str = NULL;
+				}
+				else
+				{
+					show_tokens_data(sh.tokens);
+					// del_tokens(sh->tokens);
 
-				/*
-				* 트리 구조에 저장
-				*/
-				sh.root = create_node(sh.tokens);
-				parsing(sh.root);
+					/*
+					 * 트리 구조에 저장
+					 */
+					sh.root = create_node(sh.tokens);
+					parsing(sh.root);
 
-				show_node_data(sh.root, "root");
+					show_node_data(sh.root, "root");
 
-				// del_node(&sh.root);
+					// del_node(&sh.root);
 
-			add_history(cli_str); //shows the history of lines, by pressing arrows
-			free(cli_str);
-			//free(token_list);
-			//free(line);
-			cli_str = NULL;
-		} //line[0] = '\0'일 경우도 처리 해줘야 하나?
+					add_history(cli_str); // shows the history of lines, by pressing arrows
+					free(cli_str);
+					// free(token_list);
+					// free(line);
+					cli_str = NULL;
+				}
+		} // line[0] = '\0'일 경우도 처리 해줘야 하나?
 		else
 		{
 			printf("\033[1A");
@@ -168,10 +178,10 @@ static void	ft_nodisplay_ctrlx_set(void)
 }
 */
 
-/*
-static void	ft_perror(char *str)
+
+void	ft_perror(char *str)
 {
 	printf("%s %s\n", str, strerror(errno));
 }
-*/
+
 

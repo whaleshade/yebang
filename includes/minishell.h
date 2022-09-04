@@ -90,7 +90,7 @@ void	ft_start_screen(void);
 void	rl_replace_line (const char *text, int clear_undo);
 t_list	*get_token_list(char *line);
 
-void	tokenizer(t_minishell *sh);
+int		tokenizer(t_minishell *sh);
 
 t_token	*new_token(char *data);
 void	insert_token(t_token **tokens, t_token *new);
@@ -107,4 +107,7 @@ int	node_type(int token_type);
 
 void	show_tokens_data(t_token *tokens);
 void	show_node_data(t_node *node, char *str);
+
+void	ft_perror(char *str);
+int	syntax_error(t_list *list);
 #endif

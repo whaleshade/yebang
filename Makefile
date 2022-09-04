@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: yeblee <yeblee@student.42seoul.kr>         +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/08/26 01:26:31 by yeblee            #+#    #+#              #
-#    Updated: 2022/08/28 07:32:52 by yeblee           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 # ================ Color Variables ================ #
 BLACK			= 	"\033[0;30m"
 GRAY			= 	"\033[1;30m"
@@ -48,7 +36,8 @@ SOURCES			= 				\
 				tokenizer.c		\
 				utils_token.c	\
 				utils_node.c	\
-				parsing.c		
+				parsing.c		\
+				syntax_error.c
 
 DIR_O			= objs
 SRCS			= $(addprefix $(DIR_S)/,$(SOURCES))

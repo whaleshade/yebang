@@ -2,8 +2,16 @@
 
 static int	is_space(t_minishell *sh);
 
-void	tokenizer(t_minishell *sh)
+int		tokenizer(t_minishell *sh)
 {
+	if (syntax_error(sh->list) == ERROR)
+	{
+		while (sh->list)
+			sh->list = sh->list->next;
+		ft_perror("syntax error!");
+		return (ERROR);
+	}
+
 	sh->tokens = NULL;
 	while (sh->list)
 	{
@@ -11,6 +19,7 @@ void	tokenizer(t_minishell *sh)
 			insert_token(&sh->tokens, new_token((char *)sh->list->content));
 		sh->list = sh->list->next;
 	}
+	return (SUCCESS);
 }
 
 /*
