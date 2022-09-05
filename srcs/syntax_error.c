@@ -33,6 +33,8 @@ static int	is_forbidden_char(char *c)
 	int		result;
 
 	result = FALSE;
+	if (*c < 0 || *c > 127)
+		result = TRUE;
 	if (*c == '!' || *c == '@' || *c == '~' || *c == '#'\
 		|| *c == '%' || *c == '^' || *c == '+' || *c == '{'\
 		|| *c == '}' || *c == '[' || *c == ']' || *c == ':'\
