@@ -100,11 +100,15 @@ static int	is_unclosed_quote(char *str)
 	{
 		if (str[len - 1] == '\'')
 			result = FALSE;
+		if (str[0] == '\'' && str[1] == '\0')
+			result = TRUE;
 	}
 	else if (str[i] == '\"')
 	{
 		if (str[len - 1] == '\"')
 			result = FALSE;
+		if (str[0] == '\"' && str[1] == '\0')
+			result = TRUE;
 	}
 	return (result);
 }
