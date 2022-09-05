@@ -5,7 +5,8 @@ static void	sig_handler(int	signo);
 static void	show_list_contents(t_list *ist);
 // static void	show_tokens_data(t_token *tokens);
 // static void	show_node_data(t_node *node);
-// static void	ft_nodisplay_ctrlx_set(void);
+static void	ft_nodisplay_ctrlx_set(void);
+static void	ft_display_ctrlx_set(void);
 // static void	ft_perror(char *str);
 
 t_global	g_var;
@@ -25,12 +26,14 @@ int	main(int ac, char **av, char **envp)
 	g_var.env = envp;
 
 	/* TERMINAL INIT SETTINGS */
-	//ft_nodisplay_ctrlx_set();
+	ft_nodisplay_ctrlx_set();
 
 	/* CMD LOOP */
 	shell_loop(); //READ, PARSE, EXEC
 	/* TERMINATE PROC */
 	//YOUR CODE HERE
+
+	ft_display_ctrlx_set();
 	return (0);
 }
 
@@ -91,6 +94,7 @@ static void	shell_loop()
 			printf("\033[7C");
 			printf("exit\n");
 			free(cli_str);
+			ft_display_ctrlx_set();
 			exit(1);
 		}
 	}
@@ -165,19 +169,24 @@ void	show_node_data(t_node *node, char *str)
 }
 //use tcsetattr and tcgetattr to modify your terminal settings.
 //clear the ECHOCTL bit flag to suppress output from Ctrl-based signals.
-/*
+
 static void	ft_nodisplay_ctrlx_set(void)
 {
-	struct termios settings;
-
-	if (tcgetattr(STDIN_FILENO, &settings) == ERROR)
+	if (tcgetattr(STDIN_FILENO, &g_var.settings) == ERROR)
 		ft_perror("minsh: tcgetattr");
-	settings.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &settings) == ERROR)
+	g_var.settings.c_lflag &= ~ECHOCTL;
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &g_var.settings) == ERROR)
 		ft_perror("minsh: tcsetattr");
 }
-*/
 
+static void	ft_display_ctrlx_set(void)
+{
+	if (tcgetattr(STDIN_FILENO, &g_var.settings) == ERROR)
+		ft_perror("minsh: tcgetattr");
+	g_var.settings.c_lflag &= ECHOCTL;
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &g_var.settings) == ERROR)
+		ft_perror("minsh: tcsetattr");
+}
 
 void	ft_perror(char *str)
 {

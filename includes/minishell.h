@@ -61,6 +61,7 @@ typedef struct s_global
 {
 	int		status;
 	char	**env;
+	struct termios settings;
 } t_global;
 
 // token : 가장 작은 단위로 나눔
