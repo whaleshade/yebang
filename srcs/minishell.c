@@ -62,8 +62,6 @@ static void	shell_loop()
 				{
 					add_history(cli_str); // shows the history of lines, by pressing arrows
 					free(cli_str);
-					// free(token_list);
-					// free(line);
 					cli_str = NULL;
 				}
 				else
@@ -83,11 +81,9 @@ static void	shell_loop()
 
 					add_history(cli_str); // shows the history of lines, by pressing arrows
 					free(cli_str);
-					// free(token_list);
-					// free(line);
 					cli_str = NULL;
 				}
-		} // line[0] = '\0'일 경우도 처리 해줘야 하나?
+		}
 		else
 		{
 			printf("\033[1A");
