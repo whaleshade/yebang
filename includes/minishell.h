@@ -72,12 +72,11 @@ typedef struct s_global
 // }	t_dict;
 
 
-typedef struct s_envrion
+typedef struct s_environ
 {
-	// t_dict				*dict;
 	char				*key;
 	char				*value;
-	struct s_envirion	*next;
+	struct s_environ	*next;
 }	t_environ;
 
 // token : 가장 작은 단위로 나눔

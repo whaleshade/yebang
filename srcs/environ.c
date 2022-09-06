@@ -12,13 +12,6 @@ t_environ	*get_envp_list(char *line)
 
 	env_list = NULL;
 	make_env_list(line, &env_list);
-
-	// t_environ *tmp = env_list;
-	// while (tmp)
-	// {
-	// 	printf("show : %s === %s\n", tmp->key, tmp->value);
-	// 	tmp = tmp->next;
-	// }
 	return (env_list);
 }
 
