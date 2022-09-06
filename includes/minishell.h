@@ -65,16 +65,16 @@ typedef struct s_global
 	// char	*path;
 } t_global;
 
-typedef struct s_dictionary
+typedef struct s_dict
 {
 	char	*key;
 	char	*value;
-}	t_dictionary;
+}	t_dict;
 
 typedef struct s_envrion
 {
-	t_dictionary	*dict;
-	struct s_envirion	*env;
+	t_dict				*dict;
+	struct s_envirion	*next;
 }	t_envirion;
 
 // token : 가장 작은 단위로 나눔
@@ -98,6 +98,7 @@ typedef struct s_minishell
 	t_node		*root;
 	t_token		*tokens;
 	t_list		*list;
+	t_envirion	*envp;
 }				t_minishell;
 
 void	ft_start_screen(void);

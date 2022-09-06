@@ -3,8 +3,6 @@
 static void	shell_loop(void);
 static void	sig_handler(int signo);
 static void	show_list_contents(t_list *ist);
-// static void	show_tokens_data(t_token *tokens);
-// static void	show_node_data(t_node *node);
 static void	ft_nodisplay_ctrlx_set(void);
 static void	ft_display_ctrlx_set(void);
 static void	parse_exec(char *cli_str);
@@ -42,7 +40,6 @@ static void	shell_loop()
 {
 	char *cli_str;
 
-
 	while (LOOP)
 	{
 		signal(SIGINT, sig_handler); // ctrl + c ... before fork(), set default
@@ -51,39 +48,6 @@ static void	shell_loop()
 		if (cli_str)
 		{
 			parse_exec(cli_str);
-			// ft_lstadd_back(&sh.list,  get_token_list(cli_str));
-			// show_list_contents(sh.list);
-			// // ft_lstclear(&sh.list);
-
-			// /*
-			// * yeblee - tokenizer(sh, list);
-			// * : token_list를 t_token형식에 맞게 적용
-			// *   따옴표를 제외한 token_list 화이트 스페이스 제거, type 적용
-			// */
-			// if (tokenizer(&sh) == ERROR)
-			// {
-			// 	add_history(cli_str); // shows the history of lines, by pressing arrows
-			// 	free(cli_str);
-			// 	cli_str = NULL;
-			// }
-			// else
-			// {
-			// 	show_tokens_data(sh.tokens);
-			// 	// del_tokens(sh->tokens);
-
-			// 	/*
-			// 	 * 트리 구조에 저장
-			// 	 */
-			// 	sh.root = create_node(sh.tokens);
-			// 	parsing(sh.root);
-
-			// 	show_node_data(sh.root, "root");
-
-			// 	// del_node(&sh.root);
-
-			// 	add_history(cli_str); // shows the history of lines, by pressing arrows
-			// 	free(cli_str);
-			// 	cli_str = NULL;
 		}
 		else
 		{
