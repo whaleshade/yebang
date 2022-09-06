@@ -65,6 +65,18 @@ typedef struct s_global
 	// char	*path;
 } t_global;
 
+typedef struct s_dictionary
+{
+	char	*key;
+	char	*value;
+}	t_dictionary;
+
+typedef struct s_envrion
+{
+	t_dictionary	*dict;
+	struct s_envirion	*env;
+}	t_envirion;
+
 // token : 가장 작은 단위로 나눔
 typedef struct s_token
 {
