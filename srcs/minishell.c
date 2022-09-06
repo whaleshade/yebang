@@ -8,10 +8,29 @@ static void	ft_display_ctrlx_set(void);
 static void	parse_exec(char *cli_str);
 // static void	ft_perror(char *str);
 
-t_global	g_var;
+
 // /* to be organized */
 // #include "start_screen.c"
 // #include "get_tokens.c"
+
+void	show_env_list(t_environ *list)
+{
+	t_environ	*tmp;
+
+	if (!list)
+		return;
+	tmp = list;
+	printf("\033[0;36m");
+	printf("env list : \n");
+	while (tmp)
+	{
+		printf("\033[0;36m");
+		printf("result : [%s == %s]\n", (char *)tmp->dict->key, (char *)tmp->dict->value);
+		tmp = tmp->next;
+	}
+	printf("\n");
+	printf("\n\033[0;0m\x1b[1A\x1b[M");
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -65,6 +84,12 @@ static void	parse_exec(char *cli_str)
 {
 	t_minishell	sh;
 
+	sh.envp = NULL;
+	sh.list = NULL;
+	sh.root = NULL;
+	sh.tokens = NULL;
+	env_lstadd_back(&sh.envp, get_envp_list(cli_str));
+	show_env_list(sh.envp);//
 	ft_lstadd_back(&sh.list, get_token_list(cli_str));
 	show_list_contents(sh.list);
 	// ft_lstclear(&sh.list);

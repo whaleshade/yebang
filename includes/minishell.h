@@ -71,11 +71,12 @@ typedef struct s_dict
 	char	*value;
 }	t_dict;
 
+
 typedef struct s_envrion
 {
 	t_dict				*dict;
 	struct s_envirion	*next;
-}	t_envirion;
+}	t_environ;
 
 // token : 가장 작은 단위로 나눔
 typedef struct s_token
@@ -98,8 +99,10 @@ typedef struct s_minishell
 	t_node		*root;
 	t_token		*tokens;
 	t_list		*list;
-	t_envirion	*envp;
+	t_environ	*envp;
 }				t_minishell;
+
+t_global	g_var;
 
 void	ft_start_screen(void);
 void	rl_replace_line (const char *text, int clear_undo);
@@ -125,4 +128,11 @@ void	show_node_data(t_node *node, char *str);
 
 void	ft_perror(char *str);
 int	syntax_error(t_list *list);
+
+t_environ	*get_envp_list(char *line);
+void	env_lstadd_back(t_environ **lst, t_environ *new);
+void	make_env_list(char *line, t_environ **env_list);
+void	lstadd_env_node(t_dict *dict, t_environ **env_list);
+t_environ	*env_lstnew(t_dict *dict);
+t_environ	*env_lstlast(t_environ *lst);
 #endif
