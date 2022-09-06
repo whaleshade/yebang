@@ -65,16 +65,18 @@ typedef struct s_global
 	// char	*path;
 } t_global;
 
-typedef struct s_dict
-{
-	char	*key;
-	char	*value;
-}	t_dict;
+// typedef struct s_dict
+// {
+// 	char	*key;
+// 	char	*value;
+// }	t_dict;
 
 
 typedef struct s_envrion
 {
-	t_dict				*dict;
+	// t_dict				*dict;
+	char				*key;
+	char				*value;
 	struct s_envirion	*next;
 }	t_environ;
 
@@ -130,9 +132,5 @@ void	ft_perror(char *str);
 int	syntax_error(t_list *list);
 
 t_environ	*get_envp_list(char *line);
-void	env_lstadd_back(t_environ **lst, t_environ *new);
-void	make_env_list(char *line, t_environ **env_list);
-void	lstadd_env_node(t_dict *dict, t_environ **env_list);
-t_environ	*env_lstnew(t_dict *dict);
-t_environ	*env_lstlast(t_environ *lst);
+
 #endif
