@@ -91,6 +91,7 @@ typedef struct s_node
 {
 	enum e_type		type;
 	t_token			*tokens;
+	int				state;
 	struct s_node	*left;
 	struct s_node	*right;
 }				t_node;
@@ -130,6 +131,10 @@ void	show_node_data(t_node *node, char *str);
 void	ft_perror(char *str);
 int	syntax_error(t_list *list);
 
-t_environ	*get_envp_list(char *line);
+t_environ	*get_envp_list(void);
+
+// int	redir_parse_tree(t_minishell *sh);
+// void	recursive(t_node *node);
+void	show_wordnode_data(t_node *node, char *str);
 
 #endif

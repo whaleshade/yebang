@@ -1,28 +1,27 @@
 #include "../includes/minishell.h"
 
 void	env_lstadd_back(t_environ **lst, t_environ *new);
-void	make_env_list(char *line, t_environ **env_list);
+void	make_env_list(t_environ **env_list);
 void	lstadd_env_node(char *key, char *value, t_environ **env_list);
 t_environ	*env_lstnew(char *key, char *value);
 t_environ	*env_lstlast(t_environ *lst);
 
-t_environ	*get_envp_list(char *line)
+t_environ	*get_envp_list(void)
 {
 	t_environ	*env_list;
 
 	env_list = NULL;
-	make_env_list(line, &env_list);
+	make_env_list(&env_list);
 	return (env_list);
 }
 
-void	make_env_list(char *line, t_environ **env_list)
+void	make_env_list(t_environ **env_list)
 {
 	int		i;
 	char	*key;
 	char	*value;
 	char	**tmp;
 
-	printf("find $ : %s\n", line);
 	tmp = NULL;
 	i = 0;
 	while (g_var.env[i])

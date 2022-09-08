@@ -1,6 +1,7 @@
 #include "../../includes/minishell.h"
 
 char	*prev_path; //전역 구조체 변수에 저장..혹은 OLDPWD?
+//OLDPWD를 getenv()를 이용해 가져오면 될듯?
 
 int	ft_cd(char *path);
 

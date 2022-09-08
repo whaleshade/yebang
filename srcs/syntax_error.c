@@ -6,6 +6,7 @@ static int	is_paired_parens(char *str);
 static int	is_unclosed_quote(char *str);
 
 //syntax error 리턴값별로 perror 문구 다르게
+//괄호 옆에 명령어 올때도 에러처리
 int	syntax_error(t_list *list)
 {
 	while (list)

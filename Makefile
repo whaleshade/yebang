@@ -14,7 +14,7 @@ LINE_CLEAR		=	"\x1b[1A\x1b[M"
 NAME			= minishell
 
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS			= -g3 -fsanitize=address #-Wall -Wextra -Werror
 RM				= rm -rf
 
 LIB_READ		= -l readline
@@ -38,7 +38,9 @@ SOURCES			= 				\
 				utils_node.c	\
 				parsing.c		\
 				syntax_error.c	\
-				environ.c
+				environ.c		\
+				redirection.c	\
+				#execution.c
 
 DIR_O			= objs
 SRCS			= $(addprefix $(DIR_S)/,$(SOURCES))

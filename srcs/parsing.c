@@ -40,7 +40,8 @@ void	parsing(t_node	*node)
 			// printf("parsing : root [%d] - %s\n",root->type, root->data);
 			insert_node(&node->tokens, root);
 
-			left_token = node->tokens;
+			left_token = node->tokens; //처음 입력된 토큰 타입으로 모두 정해져버리는 문제..
+			printf("l token ::: %s type ::: %d\n", node->tokens->data, node->tokens->type);
 			if (left_token == root)
 			{
 				right_token = root->next;
@@ -51,9 +52,10 @@ void	parsing(t_node	*node)
 				return ;
 			}
 			node->left = create_node(left_token);
+			printf("@@ left node type : %d\n", left_token->type);//
 			right_token = root->next;
 			node->right = create_node(right_token);
-
+			printf(" @@ right node type : %d\n", right_token->type);//
 			root->next = NULL;
 			node->tokens = root;
 
