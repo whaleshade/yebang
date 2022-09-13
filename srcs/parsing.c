@@ -33,15 +33,17 @@ void	parsing(t_node	*node)
 	if (node)
 	{
 		root = is_and_or_pipe(node->tokens);
+
 		if (!root)
 			return ;
 		if (root && (root->type == AND || root->type == OR || root->type == PIPE))
 		{
-			// printf("parsing : root [%d] - %s\n",root->type, root->data);
+			node->type = node_type(root->type); //노드가 root일때 자체의 타입
+			// printf("node type ::::::: %d\n", node->type);
 			insert_node(&node->tokens, root);
 
 			left_token = node->tokens; //처음 입력된 토큰 타입으로 모두 정해져버리는 문제..
-			printf("l token ::: %s type ::: %d\n", node->tokens->data, node->tokens->type);
+			// printf("l token ::: %s type ::: %d\n", node->tokens->data, node->tokens->type);//
 			if (left_token == root)
 			{
 				right_token = root->next;
@@ -52,10 +54,11 @@ void	parsing(t_node	*node)
 				return ;
 			}
 			node->left = create_node(left_token);
-			printf("@@ left node type : %d\n", left_token->type);//
+			// printf("@@ left node type : %d\n", left_token->type);//
 			right_token = root->next;
+			// printf(" @@ right node type : %d\n", right_token->type);//
 			node->right = create_node(right_token);
-			printf(" @@ right node type : %d\n", right_token->type);//
+
 			root->next = NULL;
 			node->tokens = root;
 
@@ -88,6 +91,9 @@ static t_token	*is_and_or_pipe(t_token	*tokens)
 	}
 	return (NULL);
 }
+
+
+
 
 // static t_token	*is_pipe(t_token *tokens)
 // {
