@@ -52,7 +52,7 @@ enum	e_type
 	TK_AND,
 	TK_PIPE,
 	TK_WORD,
-	TK_REDIR,
+	// TK_REDIR,
 	TK_PARENS
 };
 
@@ -91,6 +91,8 @@ typedef struct s_node
 {
 	enum e_type		type;
 	t_token			*tokens;
+	t_token			*words;
+	t_token			*redir;
 	int				state;
 	struct s_node	*left;
 	struct s_node	*right;

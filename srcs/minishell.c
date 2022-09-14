@@ -83,7 +83,7 @@ static void	parse_exec(char *cli_str)
 		sh.root = create_node(sh.tokens);
 		parsing(sh.root);
 		// show_node_data(sh.root, "root");
-		show_wordnode_data(sh.root, "only word"); //
+		show_wordnode_data(sh.root, "only word"); //for redirection
 		add_history(cli_str); // shows the history of lines, by pressing arrows
 		free(cli_str);
 		cli_str = NULL;

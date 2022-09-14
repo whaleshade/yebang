@@ -14,13 +14,11 @@ t_node	*create_node(t_token *tokens)
 		printf("Error\n");
 		exit(1);
 	}
-	// printf("input token type = %d\n", tokens->type); //뭔가 이상함. 다 3으로 입력
 	type = node_type(tokens->type);
 
 	root->type = type;
 	root->tokens = tokens;
 	root->state = TRUE; //실행을 위한 초기 세팅
-	// show_node_data(root);
 	return (root);
 }
 
@@ -39,7 +37,6 @@ void	insert_node(t_token **tokens, t_token *root)
 		token = token->next;
 	}
 	token->next = NULL;
-	// printf("@@@ inseted node type : %d\n", root->type);
 }
 
 void	del_node(t_node *node)

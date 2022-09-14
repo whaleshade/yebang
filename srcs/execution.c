@@ -1,39 +1,30 @@
 #include "../../includes/minishell.h"
 
-int	exec_parse_tree(t_minishell *sh)
-{
-	int		result;
-	t_node	*node;
+static int	cmd_exec(t_node *words);
 
-	result = SUCCESS;
-	if (!sh)
-		return (ERROR);
-	node = sh->root;
-	if (node->type == TK_AND || node->type == TK_OR)
-		node = node->left;
-	if (node->type == TK_PIPE)
-		node = node->left;
-	if (node->type == TK_WORD)
-
-
-
-	return (result);
-}
-
-void	show_node_data(t_node *node, char *str)
+void	exec_parse_tree(t_node *node, t_environ *envp)
 {
 	t_node	*tmp;
+	int		res;
 
 	if (!node)
 		return ;
 	tmp = node;
-	if (!tmp)
-		return ;
-	printf("\033[0;36m");
-	printf("node  - %s :\n", str);
-	show_tokens_data(node->tokens);
-	show_node_data(tmp->left, "left");
-	show_node_data(tmp->right, "right");
-	// printf("\n");
-	printf("\n\033[0;0m\x1b[1A\x1b[M");
+	exec_parse_tree(node->left, envp);
+	if (node->type == TK_WORD)
+	{
+		res = cmd_exec(node->words);
+		if (res == SUCCESS)
+			exec_parse_tree(node->right, envp);
+		else
+		{
+			//ERROR CODE
+			;
+		}
+	}
+}
+
+static int	cmd_exec(t_node *words)
+{
+
 }
