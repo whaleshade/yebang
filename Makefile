@@ -40,7 +40,7 @@ SOURCES			= 				\
 				syntax_error.c	\
 				environ.c		\
 				redirection.c	\
-				#execution.c
+				execution.c
 
 DIR_O			= objs
 SRCS			= $(addprefix $(DIR_S)/,$(SOURCES))

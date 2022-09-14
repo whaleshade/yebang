@@ -139,4 +139,6 @@ t_environ	*get_envp_list(void);
 // void	recursive(t_node *node);
 void	show_wordnode_data(t_node *node, char *str);
 
+void	exec_parse_tree(t_node *node, t_environ *envp);
+
 #endif
