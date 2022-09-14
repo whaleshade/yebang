@@ -23,7 +23,11 @@ void	exec_parse_tree(t_node *node, t_environ *envp)
 			printf("EXEC ERROR\n");
 		}
 	}
-	if (res == ERROR)
+	if (res == ERROR && node->type == TK_OR)
+		res = SUCCESS;
+	else if (res == ERROR && node->type == TK_AND)
+		res = ERROR;
+	if (res == ERROR && node->type != TK_PIPE)
 		return ;
 	exec_parse_tree(node->right, envp);
 }
