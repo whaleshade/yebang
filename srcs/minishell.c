@@ -66,7 +66,7 @@ static void	parse_exec(char *cli_str)
 	sh.root = NULL;
 	sh.tokens = NULL;
 	sh.envp = get_envp_list();  //export 혹은 unset 실행할 때마다 env_list를 조작해야 함.
-	// show_env_list(sh.envp); //env list check..
+	show_env_list(sh.envp); //env list check..
 	ft_lstadd_back(&sh.list, get_token_list(cli_str));
 	// show_list_contents(sh.list);
 

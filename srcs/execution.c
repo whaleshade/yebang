@@ -13,6 +13,12 @@ void	exec_parse_tree(t_node *node, t_environ *envp)
 		return ;
 	tmp = node;
 	exec_parse_tree(node->left, envp);
+
+	// if (node->type == TK_PIPE)
+	// {
+	// 	// fork()
+	// 	// left
+	// }
 	if (node->type == TK_WORD)
 	{
 		printf("...EXEC...\n");
@@ -29,6 +35,7 @@ void	exec_parse_tree(t_node *node, t_environ *envp)
 		res = ERROR;
 	if (res == ERROR && node->type != TK_PIPE)
 		return ;
+
 	exec_parse_tree(node->right, envp);
 }
 
